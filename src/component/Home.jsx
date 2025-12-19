@@ -72,6 +72,7 @@ function Home() {
   const [orderMode, setOrderMode] = useState(1);
   const [orderType, setOrderType] = useState("Dine In");
   const [showType, setShowType] = useState(false);
+  const[currentDateTime,setCurrentDateTime] =useState(new Date)
 
 
 
@@ -111,180 +112,198 @@ function Home() {
 
 
   return (
-    <div className="flex w-full bg-gray-800">
-      <div className="w-full bg-gray-800 text-white min-h-screen ml-20">
+    <div className="w-full bg-gray-800 text-white min-h-screen lg:ml-20">
+      <div className="flex w-full">
 
-      <div className="flex flex-col lg:flex-row ">
-        <div className='hidden lg:block'>
-          <Sidebar />
-        </div>
-
-        <div
-          className={`px-6 transition-all duration-300 ${showOrder ? "w-full lg:w-[65%]" : "w-full"
-            }`}
-        >
-
-          <div className="flex items-center justify-between mt-4">
-            <div>
-              <h1 className="text-4xl head">Chef Kitchen</h1>
-              <p>Tuesday, 2 March 2024</p>
-            </div>
-
-            <div className="relative hidden sm:block">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search food,coffe,etc.."
-                className="h-14 pl-10 pr-4 w-60 rounded-xl bg-gray-800 border border-gray-600 outline-none"
-              />
-            </div>
+        <div className="flex flex-col lg:flex-row w-full relative">
+          <div className='hidden lg:block'>
+            <Sidebar />
           </div>
 
-          <div className="flex text-white mt-4 space-x-10">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActive(tab.id)}
-                className={`pb-1 transition-all ${active === tab.id ? "text-orange-400" : "text-white cursor-pointer"}`}>
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <div
+            className={`px-4 sm:px-6 transition-all duration-300 
+               ${showOrder ? "w-full lg:w-[65%]" : "w-full"} 
+               bg-gray-800 h-screen flex flex-col`}
+                   >
 
-          <div className="relative w-full mt-3">
-            <div className="w-full border-b-2 border-gray-600"></div>
 
-            <div className="absolute top-0 border-b-5 border-orange-400 rounded-full transition-all"
-              style={{
-                width: "90px",
-                left:
-                  active === "today"
-                    ? "0px"
-                    : active === "our"
-                      ? "130px"
-                      : "250px",
-              }}
-            ></div>
-          </div>
 
-          <div className=" flex-col h-120 overflow-y-auto hide-scrollbar">
-            <div className="mt-6 w-full  ">
-              <div className="flex justify-between items-center mb-4">
-
-                <h1 className="text-xl head">Choose Dishes</h1>
-                <div className="justify-end flex flex-row gap-3">
-                  <div className="relative">
-                    {/* Selected button */}
-                    <button
-                      onClick={() => setShowType(!showType)}
-                      className="flex items-center gap-1 bg-gray-900 px-4 py-2 rounded-lg"
-                    >
-                      {orderType}
-                      <ChevronDown
-                        className={`transition-transform ${showType ? "rotate-180" : ""}`}
-                      />
-                    </button>
-
-                    {/* Dropdown options */}
-                    {showType && (
-                      <div className="absolute right-0 mt-2 w-30 bg-gray-900 rounded-lg shadow-lg overflow-hidden z-10">
-                        {["Dine In", "Take Away", "Delivery"].map((type) => (
-                          <button
-                            key={type}
-                            onClick={() => {
-                              setOrderType(type);
-                              setShowType(false);
-                            }}
-                            className="w-full text-left px-4 py-2 hover:bg-amber-500 hover:text-white"
-                          >
-                            {type}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <button onClick={() => setShowOrder(true)} className="bg-amber-500 rounded-xl px-4 py-1 cursor-pointer">
-                    <ShoppingCart />
-                  </button>
-                </div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4">
+              <div>
+                <h1 className="text-4xl head">Chef Kitchen</h1>
+                {currentDateTime.toLocaleDateString("en-IN", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
               </div>
 
-              <div className="grid grid-cols-2  md:grid-cols-2 py-10 lg:grid-cols-3 gap-12 pb-10">
-                {dishes.map((item, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center"
-                  >
-                    <img
-                      src={item.img}
-                      className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
-                    />
-                    <p className="text-sm text-center font-semibold">
-                      {item.name}
-                    </p>
+              <div className="relative hidden sm:block">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search food,coffe,etc.."
+                  className="h-14 pl-10 pr-4 w-60 rounded-xl bg-gray-800 border border-gray-600 outline-none"
+                />
+              </div>
+            </div>
 
-                    {item.oldPrice ? (
-                      <div className="flex gap-2 text-xs mt-1">
-                        <span className="line-through text-red-400">
-                          {item.oldPrice}
-                        </span>
-                        <span className="text-green-400">
-                          {item.newPrice}
-                        </span>
-                      </div>
-                    ) : (
-                      <p className="text-sm mt-1">{item.price}</p>
-                    )}
+            <div className="flex text-white mt-4 space-x-6 overflow-x-auto hide-scrollbar">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActive(tab.id)}
+                  className={`pb-1 transition-all ${active === tab.id ? "text-orange-400" : "text-white cursor-pointer"}`}>
+                  {tab.label}
+                </button>
+              ))}
+            </div>
 
-                    <p className="text-xs text-gray-400 mt-1">
-                      {item.bowls}
-                    </p>
-                    <div className="flex justify-center gap-2 mt-2">
-                      {item.sizes.map((s, index) => (
-                        <button key={index} className="text-sm border border-gray-400 gap-2 px-2 rounded-md hover:bg-amber-500">
-                          {s}
-                        </button>
-                      ))}
+            <div className="relative w-full mt-3">
+              <div className="w-full border-b-2 border-gray-600"></div>
 
+              <div className="absolute top-0 border-b-5 border-orange-400 rounded-full transition-all"
+                style={{
+                  width: "90px",
+                  left:
+                    active === "today"
+                      ? "0px"
+                      : active === "our"
+                        ? "130px"
+                        : "250px",
+                }}
+              ></div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto hide-scrollbar">
+              <div className="mt-6 w-full  ">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+
+                  <h1 className="text-xl head">Choose Dishes</h1>
+                  <div className="justify-end flex flex-row gap-3">
+                    <div className="relative">
+                      {/* Selected button */}
+                      <button
+                        onClick={() => setShowType(!showType)}
+                        className="flex items-center gap-1 bg-gray-900 px-4 py-2 rounded-lg"
+                      >
+                        {orderType}
+                        <ChevronDown
+                          className={`transition-transform ${showType ? "rotate-180" : ""}`}
+                        />
+                      </button>
+
+                      {/* Dropdown options */}
+                      {showType && (
+                        <div className="absolute right-0 mt-2 w-30 bg-gray-900 rounded-lg shadow-lg overflow-hidden z-10">
+                          {["Dine In", "Take Away", "Delivery"].map((type) => (
+                            <button
+                              key={type}
+                              onClick={() => {
+                                setOrderType(type);
+                                setShowType(false);
+                              }}
+                              className="w-full text-left px-4 py-2 hover:bg-amber-500 hover:text-white"
+                            >
+                              {type}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
-                    <button
-                      onClick={() => {
-                        handleAddToCart(item);
-                        setShowOrder(true);
-                      }}
-                      className={`rounded-xl px-3 py-1 cursor-pointer transition-all mt-5
-                       ${isItemInCart(item.name)
-                          ? "bg-green-500"
-                          : "bg-amber-500 hover:bg-amber-600"
-                        }`}
-                    >
-                      {isItemInCart(item.name) ? "Added" : "Add"}
+                    <button onClick={() => setShowOrder(true)} className="bg-amber-500 rounded-xl px-4 py-1 cursor-pointer">
+                      <ShoppingCart />
                     </button>
-
                   </div>
-                ))}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 bg-gray-800 ">
+                  {dishes.map((item, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center w-full max-w-[320px] mx-auto"
+                    >
+                      <img
+                        src={item.img}
+                        className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
+                      />
+                      <p className="text-sm text-center font-semibold">
+                        {item.name}
+                      </p>
+
+                      {item.oldPrice ? (
+                        <div className="flex gap-2 text-xs mt-1">
+                          <span className="line-through text-red-400">
+                            {item.oldPrice}
+                          </span>
+                          <span className="text-green-400">
+                            {item.newPrice}
+                          </span>
+                        </div>
+                      ) : (
+                        <p className="text-sm mt-1">{item.price}</p>
+                      )}
+
+                      <p className="text-xs text-gray-400 mt-1">
+                        {item.bowls}
+                      </p>
+                      <div className="flex justify-center gap-2 mt-2">
+                        {item.sizes.map((s, index) => (
+                          <button key={index} className="text-sm border border-gray-400 gap-2 px-2 rounded-md hover:bg-amber-500">
+                            {s}
+                          </button>
+                        ))}
+
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          handleAddToCart(item);
+                          setShowOrder(true);
+                        }}
+                        className={`rounded-xl px-3 py-1 cursor-pointer transition-all mt-5
+                       ${isItemInCart(item.name)
+                            ? "bg-green-500"
+                            : "bg-amber-500 hover:bg-amber-600"
+                          }`}
+                      >
+                        {isItemInCart(item.name) ? "Added" : "Add"}
+                      </button>
+
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+
+
+          {showOrder && (
+            <div
+              className="
+    fixed inset-0 z-50
+    lg:static lg:inset-auto
+    w-full lg:w-[35%]
+    h-screen
+    bg-gray-900
+    border-t lg:border-t-0 lg:border-l border-gray-700
+    flex flex-col
+  "
+            >
+
+              <Order cart={cart} onDelete={handleDelete}
+                onClose={() => setShowOrder(false)}
+                orderMode={orderMode}
+                setOrderMode={setOrderMode} />
+
+
+            </div>
+          )}
+
         </div>
-
-
-        {showOrder && (
-          <div className="w-full lg:w-[35%] border-t lg:border-t-0 lg:border-l border-gray-700">
-
-            <Order cart={cart} onDelete={handleDelete}
-              onClose={() => setShowOrder(false)}
-              orderMode={orderMode}
-              setOrderMode={setOrderMode} />
-
-
-          </div>
-        )}
-
       </div>
-    </div>
 
     </div>
   );
