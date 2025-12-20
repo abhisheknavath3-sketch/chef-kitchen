@@ -19,46 +19,48 @@ const dishes = [
   {
     img: "/image1.png",
     name: "Healthy noodle with spinach leaf",
-    oldPrice: "3.29 ",
-    newPrice: "3.29",
+    basePrice: 3.29,
+    sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "22 Bowls available",
     sizes: ["S", "M", "L"],
   },
-
   {
     img: "/image2.png",
     name: "Hot spicy fried rice with omelet",
-    oldPrice: "3.29 ",
-    newPrice: "3.29 ",
+    basePrice: 3.29,
+    sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "13 Bowls available",
     sizes: ["S", "M", "L"],
   },
   {
     img: "/image3.png",
     name: "Spicy noodle with special omelette",
-    oldPrice: "3.29 ",
-    newPrice: "3.29 ",
+    basePrice: 5.29,
+    sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "17 Bowls available",
     sizes: ["S", "M", "L"],
   },
   {
     img: "/image4.png",
     name: "Healthy Noodle with spinach leaf",
-    price: "25.00",
+    basePrice: 25.00,
+    sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "22 Bowls available",
     sizes: ["S", "M", "L"],
   },
   {
     img: "/image5.png",
     name: "Hot Spicy fried rice with omelet",
-    price: "25.00 ",
+    basePrice: 26.00,
+    sizePrices: { S: 0, M: 6, L: 15 },
     bowls: "13 Bowls available",
     sizes: ["S", "M", "L"],
   },
   {
     img: "/image6.png",
     name: "Spicy Noodle with special omelette",
-    price: "25.00 ",
+    basePrice: 27.00,
+    sizePrices: { S: 0, M: 5, L: 15 },
     bowls: "17 Bowls available",
     sizes: ["S", "M", "L"],
   },
@@ -72,28 +74,47 @@ function Home() {
   const [orderMode, setOrderMode] = useState(1);
   const [orderType, setOrderType] = useState("Dine In");
   const [showType, setShowType] = useState(false);
-  const[currentDateTime,setCurrentDateTime] =useState(new Date)
+  const [currentDateTime, setCurrentDateTime] = useState(new Date)
+  const [searchQuery, setSearchQuery] = useState("");
 
 
+  const [selectedSize, setSelectedSize] = useState({});
 
-  const isItemInCart = (name) => {
-    return cart.some((item) => item.name === name);
+  const handleSizeSelect = (itemName, size) => {
+    setSelectedSize(prev => ({
+      ...prev,
+      [itemName]: size,
+    }));
   };
 
 
-  const handleDelete = (name) => {
-    setCartItems(prev =>
-      prev.filter(item => item.name !== name)
+
+  const isItemInCart = (item) => {
+    const size = selectedSize[item.name] || "S";
+    return cart.some(
+      c => c.name === item.name && c.size === size
     );
   };
 
+  const handleDelete = (name, size) => {
+    setCartItems(prev =>
+      prev.filter(item => !(item.name === name && item.size === size))
+    );
+  };
+
+
   const handleAddToCart = (item) => {
-    setCartItems((prev) => {
-      const existing = prev.find((i) => i.name === item.name);
+    const size = selectedSize[item.name] || "S";
+    const finalPrice = item.basePrice + item.sizePrices[size];
+
+    setCartItems(prev => {
+      const existing = prev.find(
+        i => i.name === item.name && i.size === size
+      );
 
       if (existing) {
-        return prev.map((i) =>
-          i.name === item.name
+        return prev.map(i =>
+          i.name === item.name && i.size === size
             ? { ...i, qty: i.qty + 1 }
             : i
         );
@@ -103,8 +124,9 @@ function Home() {
         ...prev,
         {
           ...item,
+          size,
+          price: finalPrice,
           qty: 1,
-          price: item.newPrice || item.price,
         },
       ];
     });
@@ -124,7 +146,7 @@ function Home() {
             className={`px-4 sm:px-6 transition-all duration-300 
                ${showOrder ? "w-full lg:w-[65%]" : "w-full"} 
                bg-gray-800 h-screen flex flex-col`}
-                   >
+          >
 
 
 
@@ -132,20 +154,23 @@ function Home() {
               <div>
                 <h1 className="text-4xl head">Chef Kitchen</h1>
                 {currentDateTime.toLocaleDateString("en-IN", {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
               </div>
 
               <div className="relative hidden sm:block">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Search food,coffe,etc.."
+                  placeholder="Search food, coffee, etc.."
                   className="h-14 pl-10 pr-4 w-60 rounded-xl bg-gray-800 border border-gray-600 outline-none"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
+
               </div>
             </div>
 
@@ -219,61 +244,85 @@ function Home() {
                   </div>
                 </div>
 
+                {dishes.filter(item =>
+                  item.name.toLowerCase().includes(searchQuery.toLowerCase())
+                ).length === 0 && (
+                    <p className="text-gray-400 text-center mt-10">No items found.</p>
+                  )}
+
+
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 bg-gray-800 ">
-                  {dishes.map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center w-full max-w-[320px] mx-auto"
-                    >
-                      <img
-                        src={item.img}
-                        className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
-                      />
-                      <p className="text-sm text-center font-semibold">
-                        {item.name}
-                      </p>
+                  {dishes
+                    .filter(item =>
+                      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+                    )
+                    .map((item, index) => {
+                      const size = selectedSize[item.name] || "S";
+                      const displayPrice = item.basePrice + item.sizePrices[size];
+                      const formatPrice = (price) => {
+                        return `${price.toFixed(2)} AED`;
+                      };
 
-                      {item.oldPrice ? (
-                        <div className="flex gap-2 text-xs mt-1">
-                          <span className="line-through text-red-400">
-                            {item.oldPrice}
-                          </span>
-                          <span className="text-green-400">
-                            {item.newPrice}
-                          </span>
-                        </div>
-                      ) : (
-                        <p className="text-sm mt-1">{item.price}</p>
-                      )}
 
-                      <p className="text-xs text-gray-400 mt-1">
-                        {item.bowls}
-                      </p>
-                      <div className="flex justify-center gap-2 mt-2">
-                        {item.sizes.map((s, index) => (
-                          <button key={index} className="text-sm border border-gray-400 gap-2 px-2 rounded-md hover:bg-amber-500">
-                            {s}
+                      return (
+                        <div
+                          key={index}
+                          className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center w-full max-w-[320px] mx-auto"
+                        >
+                          <img
+                            src={item.img}
+                            className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
+                          />
+
+                          <p className="text-sm text-center font-semibold">
+                            {item.name}
+                          </p>
+
+                          {/* ✅ PRICE */}
+                          <p className="text-sm mt-1 font-semibold text-green-400">
+                            {formatPrice(displayPrice)}
+
+                          </p>
+
+                          <p className="text-xs text-gray-400 mt-1">
+                            {item.bowls}
+                          </p>
+
+                          {/* SIZE BUTTONS */}
+                          <div className="flex justify-center gap-2 mt-2">
+                            {item.sizes.map((s) => (
+                              <button
+                                key={s}
+                                onClick={() => handleSizeSelect(item.name, s)}
+                                className={`px-2 rounded-md border
+              ${selectedSize[item.name] === s
+                                    ? "bg-amber-500 text-white"
+                                    : "border-gray-400"
+                                  }`}
+                              >
+                                {s}
+                              </button>
+                            ))}
+                          </div>
+
+                          {/* ADD BUTTON */}
+                          <button
+                            onClick={() => {
+                              handleAddToCart(item);
+                              setShowOrder(true);
+                            }}
+                            className={`rounded-xl px-3 py-1 mt-5
+          ${isItemInCart(item)
+                                ? "bg-green-500"
+                                : "bg-amber-500 hover:bg-amber-600"
+                              }`}
+                          >
+                            {isItemInCart(item) ? "Added" : "Add"}
                           </button>
-                        ))}
+                        </div>
+                      );
+                    })}
 
-                      </div>
-
-                      <button
-                        onClick={() => {
-                          handleAddToCart(item);
-                          setShowOrder(true);
-                        }}
-                        className={`rounded-xl px-3 py-1 cursor-pointer transition-all mt-5
-                       ${isItemInCart(item.name)
-                            ? "bg-green-500"
-                            : "bg-amber-500 hover:bg-amber-600"
-                          }`}
-                      >
-                        {isItemInCart(item.name) ? "Added" : "Add"}
-                      </button>
-
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
@@ -293,11 +342,13 @@ function Home() {
   "
             >
 
-              <Order cart={cart} onDelete={handleDelete}
+              <Order
+                cart={cart}
+                onDelete={handleDelete}
                 onClose={() => setShowOrder(false)}
-                orderMode={orderMode}
-                setOrderMode={setOrderMode} />
-
+                orderType={orderType}         // pass selected type
+                setOrderType={setOrderType}   // pass setter to allow change from Order page
+              />
 
             </div>
           )}
