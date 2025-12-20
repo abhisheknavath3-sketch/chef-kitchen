@@ -23,6 +23,7 @@ const dishes = [
     sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "22 Bowls available",
     sizes: ["S", "M", "L"],
+    category: "our",
   },
   {
     img: "/image2.png",
@@ -31,6 +32,7 @@ const dishes = [
     sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "13 Bowls available",
     sizes: ["S", "M", "L"],
+    category: "today",
   },
   {
     img: "/image3.png",
@@ -39,6 +41,7 @@ const dishes = [
     sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "17 Bowls available",
     sizes: ["S", "M", "L"],
+    category: "our",
   },
   {
     img: "/image4.png",
@@ -47,6 +50,7 @@ const dishes = [
     sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "22 Bowls available",
     sizes: ["S", "M", "L"],
+    category: "south",
   },
   {
     img: "/image5.png",
@@ -55,6 +59,7 @@ const dishes = [
     sizePrices: { S: 0, M: 6, L: 15 },
     bowls: "13 Bowls available",
     sizes: ["S", "M", "L"],
+    category: "our",
   },
   {
     img: "/image6.png",
@@ -63,6 +68,7 @@ const dishes = [
     sizePrices: { S: 0, M: 5, L: 15 },
     bowls: "17 Bowls available",
     sizes: ["S", "M", "L"],
+    category: "south",
   },
 ];
 
@@ -71,7 +77,7 @@ function Home() {
   const [active, setActive] = useState("today");
   const [cart, setCartItems] = useState([]);
   const [showOrder, setShowOrder] = useState(false);
-  const [orderMode, setOrderMode] = useState(1);
+
   const [orderType, setOrderType] = useState("Dine In");
   const [showType, setShowType] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date)
@@ -132,15 +138,25 @@ function Home() {
     });
   };
 
+  const filteredDishes = dishes.filter((item) => {
+    // Filter by active tab
+    const matchesCategory = active === "today" ? true : item.category === active;
+
+    // Filter by search query
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
+
 
   return (
     <div className="w-full bg-gray-800 text-white min-h-screen lg:ml-20">
       <div className="flex w-full">
 
         <div className="flex flex-col lg:flex-row w-full relative">
-          <div className='hidden lg:block'>
-            <Sidebar />
-          </div>
+
+          <Sidebar />
+
 
           <div
             className={`px-4 sm:px-6 transition-all duration-300 
@@ -205,7 +221,13 @@ function Home() {
               <div className="mt-6 w-full  ">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
 
-                  <h1 className="text-xl head">Choose Dishes</h1>
+                  <h1 className="text-xl head">
+                    Choose Dishes
+                    <span className="text-gray-400 text-sm ml-2">
+                      ({filteredDishes.length} items)
+                    </span>
+                  </h1>
+
                   <div className="justify-end flex flex-row gap-3">
                     <div className="relative">
                       {/* Selected button */}
@@ -244,86 +266,71 @@ function Home() {
                   </div>
                 </div>
 
-                {dishes.filter(item =>
-                  item.name.toLowerCase().includes(searchQuery.toLowerCase())
-                ).length === 0 && (
-                    <p className="text-gray-400 text-center mt-10">No items found.</p>
-                  )}
+               
 
 
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 bg-gray-800 ">
-                  {dishes
-                    .filter(item =>
-                      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-                    )
-                    .map((item, index) => {
-                      const size = selectedSize[item.name] || "S";
-                      const displayPrice = item.basePrice + item.sizePrices[size];
-                      const formatPrice = (price) => {
-                        return `${price.toFixed(2)} AED`;
-                      };
+                {/* No items found */}
+                {filteredDishes.length === 0 && (
+                  <p className="text-gray-400 text-center mt-10">No items found.</p>
+                )}
 
 
-                      return (
-                        <div
-                          key={index}
-                          className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center w-full max-w-[320px] mx-auto"
-                        >
-                          <img
-                            src={item.img}
-                            className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
-                          />
+                {/* Dishes grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 bg-gray-800">
+                  {filteredDishes.map((item, index) => {
+                    const size = selectedSize[item.name] || "S";
+                    const displayPrice = item.basePrice + item.sizePrices[size];
 
-                          <p className="text-sm text-center font-semibold">
-                            {item.name}
-                          </p>
+                    return (
+                      <div
+                        key={index}
+                        className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center w-full max-w-[320px] mx-auto"
+                      >
+                        <img
+                          src={item.img}
+                          className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
+                        />
 
-                          {/* ✅ PRICE */}
-                          <p className="text-sm mt-1 font-semibold text-green-400">
-                            {formatPrice(displayPrice)}
+                        <p className="text-sm text-center font-semibold">{item.name}</p>
 
-                          </p>
+                        <p className="text-sm mt-1 font-semibold text-green-400">
+                          {displayPrice.toFixed(2)} AED
+                        </p>
 
-                          <p className="text-xs text-gray-400 mt-1">
-                            {item.bowls}
-                          </p>
+                        <p className="text-xs text-gray-400 mt-1">{item.bowls}</p>
 
-                          {/* SIZE BUTTONS */}
-                          <div className="flex justify-center gap-2 mt-2">
-                            {item.sizes.map((s) => (
-                              <button
-                                key={s}
-                                onClick={() => handleSizeSelect(item.name, s)}
-                                className={`px-2 rounded-md border
-              ${selectedSize[item.name] === s
-                                    ? "bg-amber-500 text-white"
-                                    : "border-gray-400"
-                                  }`}
-                              >
-                                {s}
-                              </button>
-                            ))}
-                          </div>
-
-                          {/* ADD BUTTON */}
-                          <button
-                            onClick={() => {
-                              handleAddToCart(item);
-                              setShowOrder(true);
-                            }}
-                            className={`rounded-xl px-3 py-1 mt-5
-          ${isItemInCart(item)
-                                ? "bg-green-500"
-                                : "bg-amber-500 hover:bg-amber-600"
-                              }`}
-                          >
-                            {isItemInCart(item) ? "Added" : "Add"}
-                          </button>
+                        <div className="flex gap-2 mt-2">
+                          {item.sizes.map((s) => (
+                            <button
+                              key={s}
+                              onClick={() => handleSizeSelect(item.name, s)}
+                              className={`px-2 rounded-md border ${selectedSize[item.name] === s
+                                ? "bg-amber-500 text-white"
+                                : "border-gray-400"
+                                }`}
+                            >
+                              {s}
+                            </button>
+                          ))}
                         </div>
-                      );
-                    })}
 
+                        <button
+                          onClick={() => {
+                            handleAddToCart(item);
+                            setShowOrder(true);
+                          }}
+                          className={`rounded-xl px-3 py-1 mt-5 ${isItemInCart(item)
+                            ? "bg-green-500"
+                            : "bg-amber-500 hover:bg-amber-600"
+                            }`}
+                        >
+                          {isItemInCart(item) ? "Added" : "Add"}
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
+
               </div>
             </div>
           </div>
