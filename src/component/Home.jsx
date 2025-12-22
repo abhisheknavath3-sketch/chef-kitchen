@@ -86,6 +86,9 @@ function Home() {
 
   const [selectedSize, setSelectedSize] = useState({});
 
+  const cartCount = cart.reduce((total, item) => total + item.qty, 0);
+
+
   const handleSizeSelect = (itemName, size) => {
     setSelectedSize(prev => ({
       ...prev,
@@ -260,13 +263,12 @@ function Home() {
                       )}
                     </div>
 
-                    <button onClick={() => setShowOrder(true)} className="bg-amber-500 rounded-xl px-4 py-1 cursor-pointer">
-                      <ShoppingCart />
-                    </button>
+
+
                   </div>
                 </div>
 
-               
+
 
 
                 {/* No items found */}
@@ -353,8 +355,8 @@ function Home() {
                 cart={cart}
                 onDelete={handleDelete}
                 onClose={() => setShowOrder(false)}
-                orderType={orderType}         // pass selected type
-                setOrderType={setOrderType}   // pass setter to allow change from Order page
+                orderType={orderType}
+                setOrderType={setOrderType}
               />
 
             </div>
@@ -362,6 +364,35 @@ function Home() {
 
         </div>
       </div>
+      {/* FLOATING SHOPPING CART */}
+      <button
+        onClick={() => setShowOrder(true)}
+        className="
+    fixed bottom-6 right-6 z-50
+    bg-amber-500
+    w-14 h-14
+    rounded-full
+    flex items-center justify-center
+    shadow-lg
+  "
+      >
+        <ShoppingCart className="w-6 h-6 text-white" />
+
+        {cartCount > 0 && (
+          <span className="
+      absolute -top-1 -right-1
+      bg-red-500 text-white
+      text-xs font-bold
+      w-5 h-5
+      flex items-center justify-center
+      rounded-full
+    ">
+            {cartCount}
+          </span>
+          
+        )}
+      </button>
+
 
     </div>
   );

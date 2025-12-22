@@ -2,6 +2,8 @@ import React from "react";
 import { Trash } from "lucide-react";
 import { useState, useEffect } from "react";
 import { X } from 'lucide-react';
+import Receipt from "./Receipt";
+
 
 
 
@@ -17,6 +19,8 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType }) {
     (total, item) => total + Number(item.price) * item.qty,
     0
   );
+  const [showReceipt, setShowReceipt] = useState(false);
+
 
   return (
     <div className="bg-gray-900 w-full h-full  p-4 sm:p-6 text-white flex flex-col">
@@ -32,9 +36,8 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType }) {
           <button
             key={mode}
             onClick={() => setOrderType(mode)} // update selection globally
-            className={`transition-all border p-3 rounded-lg ${
-              orderType === mode ? "bg-orange-500" : "text-orange-400 cursor-pointer"
-            }`}
+            className={`transition-all border p-3 rounded-lg ${orderType === mode ? "bg-orange-500" : "text-orange-400 cursor-pointer"
+              }`}
           >
             {mode}
           </button>
@@ -100,9 +103,19 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType }) {
           <p className="font-semibold">{subTotal.toFixed(2)} AED</p>
         </div>
 
-        <button className=" w-full bg-orange-500 py-3 rounded-xl text-1g font-semibold cursor-pointer ">
+        <button
+          onClick={() => setShowReceipt(true)}
+          className=" w-full bg-orange-500 py-3 rounded-xl text-1g font-semibold cursor-pointer ">
           Order now
         </button>
+        {showReceipt && (
+          <Receipt
+            cart={cart}
+            orderType={orderType}
+            onClose={() => setShowReceipt(false)}
+          />
+        )}
+
       </div>
     </div>
   );
