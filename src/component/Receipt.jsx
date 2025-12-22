@@ -1,5 +1,9 @@
 import React from "react";
 import { X } from "lucide-react";
+import Success from "./Success";
+import { useState } from "react";
+
+
 
 function Receipt({ cart, orderType, onClose }) {
   const subTotal = cart.reduce(
@@ -9,6 +13,7 @@ function Receipt({ cart, orderType, onClose }) {
 
   const discount = subTotal * 0.05;
   const total = subTotal - discount;
+  const [showSuccess, setShowSuccess] = useState(false);
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
@@ -71,7 +76,10 @@ function Receipt({ cart, orderType, onClose }) {
         </div>
 
         {/* Button */}
-        <button className="w-full mt-6 bg-orange-500 py-3 rounded-xl font-semibold">
+        <button
+          onClick={() => setShowSuccess(true)}
+          className="w-full mt-6 bg-orange-500 py-3 rounded-xl font-semibold"
+        >
           Confirm Order
         </button>
 
@@ -79,6 +87,15 @@ function Receipt({ cart, orderType, onClose }) {
           Thank you for your order
         </p>
       </div>
+      {showSuccess && (
+        <Success
+          onClose={() => {
+            setShowSuccess(false);
+            onClose(); // close receipt
+          }}
+        />
+      )}
+
     </div>
   );
 }

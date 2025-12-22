@@ -319,7 +319,7 @@ function Home() {
                         <button
                           onClick={() => {
                             handleAddToCart(item);
-                            setShowOrder(true);
+                           
                           }}
                           className={`rounded-xl px-3 py-1 mt-5 ${isItemInCart(item)
                             ? "bg-green-500"
