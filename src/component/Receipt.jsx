@@ -2,10 +2,12 @@ import React from "react";
 import { X } from "lucide-react";
 import Success from "./Success";
 import { useState } from "react";
+import { useEffect } from "react";
 
 
 
-function Receipt({ cart, orderType, onClose }) {
+
+function Receipt({ cart, orderType, onClose, onComplete }) {
   const subTotal = cart.reduce(
     (total, item) => total + item.price * item.qty,
     0
@@ -15,9 +17,25 @@ function Receipt({ cart, orderType, onClose }) {
   const total = subTotal - discount;
   const [showSuccess, setShowSuccess] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
+
+
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-      <div className="bg-gray-900 text-white w-[380px] rounded-2xl p-6 relative">
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-3">
+      <div
+        className="
+    bg-gray-900 text-white  w-full max-w-[380px]  max-h-[90vh] rounded-2xl  p-6
+    relative
+    overflow-y-auto
+    hide-scrollbar
+  "
+      >
 
         {/* Close */}
         <button onClick={onClose} className="absolute right-4 top-4">
@@ -89,9 +107,9 @@ function Receipt({ cart, orderType, onClose }) {
       </div>
       {showSuccess && (
         <Success
-          onClose={() => {
+          onDone={() => {
             setShowSuccess(false);
-            onClose(); // close receipt
+            onComplete(); // 🔥 very important
           }}
         />
       )}

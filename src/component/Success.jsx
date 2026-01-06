@@ -1,7 +1,7 @@
 import React from "react";
 import { CheckCircle } from "lucide-react";
 
-function Success({ onClose }) {
+function Success({ onDone }) {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
       <div className="bg-gray-900 text-white w-[320px] rounded-2xl p-6 text-center">
@@ -18,7 +18,7 @@ function Success({ onClose }) {
         </p>
 
         <button
-          onClick={onClose}
+          onClick={onDone}
           className="w-full bg-green-500 py-2 rounded-xl font-semibold"
         >
           Done

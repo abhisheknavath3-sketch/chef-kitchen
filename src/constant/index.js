@@ -1,0 +1,94 @@
+export const tabs = [
+  { id: "today", label: "Today Special" },
+  { id: "our", label: "Our Special" },
+  { id: "south", label: "South Indian Special" },
+];
+
+export const dishes = [
+
+
+  {
+    img: "/image1.png",
+    name: "Healthy noodle with spinach leaf",
+    basePrice: 3.29,
+    sizePrices: { S: 0, M: 1, L: 2 },
+    bowls: "22 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "our",
+  },
+  {
+    img: "/image2.png",
+    name: "Spicy fried rice with omelet",
+    basePrice: 3.29,
+    sizePrices: { S: 0, M: 1, L: 2 },
+    bowls: "13 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "today",
+  },
+  {
+    img: "/image3.png",
+    name: "Noodle with special omelette",
+    basePrice: 5.29,
+    sizePrices: { S: 0, M: 1, L: 2 },
+    bowls: "17 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "our",
+  },
+  {
+    img: "/image4.png",
+    name: "Healthy Noodle with spinach leaf",
+    basePrice: 25.00,
+    sizePrices: { S: 0, M: 1, L: 2 },
+    bowls: "22 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "south",
+  },
+  {
+    img: "/image5.png",
+    name: " Spicy fried rice with omelet",
+    basePrice: 26.00,
+    sizePrices: { S: 0, M: 6, L: 15 },
+    bowls: "13 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "our",
+  },
+  {
+    img: "/image6.png",
+    name: "Spicy Noodle with special omelette",
+    basePrice: 27.00,
+    sizePrices: { S: 0, M: 5, L: 15 },
+    bowls: "17 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "south",
+  },
+  {
+    img: "/image7.png",
+    name: "Spicy Noodle with omelette",
+    basePrice: 29.00,
+    sizePrices: { S: 0, M: 11, L: 20 },
+    bowls: "10 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "our",
+  },
+  {
+    img: "/image8.png",
+    name: "Spicy  omelette",
+    basePrice: 16.00,
+    sizePrices: { S: 0, M: 11, L: 20 },
+    bowls: "5 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "south",
+  },
+  {
+    img: "/image9.png",
+    name: " Noodle with omelette",
+    basePrice: 30.00,
+    sizePrices: { S: 0, M: 11, L: 20 },
+    bowls: "19 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "today",
+  },
+];
+
+ 
+  

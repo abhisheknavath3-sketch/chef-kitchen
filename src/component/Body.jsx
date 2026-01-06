@@ -1,0 +1,132 @@
+import React from 'react'
+import { ChevronDown } from 'lucide-react';
+
+const Body = ({
+  filteredDishes,
+  showType,
+  setShowType,
+  orderType,
+  setOrderType,
+  selectedSize,
+  handleSizeSelect,
+  handleAddToCart,
+  isItemInCart,
+}) => {
+  return (
+    <div className='bg-gray-800 h-full overflow-hidden  flex flex-col '>
+          <div className="flex-1 flex flex-col h-full">
+              <div className="mt-6 w-full flex flex-col h-full ">
+                <div className="flex flex-col sm:flex-row  sm:items-center sm:justify-between gap-4  ">
+
+                  <h1 className="text-xl head">
+                    Choose Dishes
+                    <span className="text-gray-400 text-sm ml-2">
+                      ({filteredDishes.length} items)
+                    </span>
+                  </h1>
+
+                  <div className="justify-end flex flex-row gap-3">
+                    <div className="relative">
+                     
+                      <button
+                        onClick={() => setShowType(!showType)}
+                        className="flex items-center gap-1 bg-gray-900 px-4 py-2 rounded-lg"
+                      >
+                        {orderType}
+                        <ChevronDown
+                          className={`transition-transform ${showType ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      
+                      {showType && (
+                        <div className="absolute right-0 mt-2 w-30 bg-gray-900 rounded-lg shadow-lg overflow-hidden z-10">
+                          {["Dine In", "Take Away", "Delivery"].map((type) => (
+                            <button
+                              key={type}
+                              onClick={() => {
+                                setOrderType(type);
+                                setShowType(false);
+                              }}
+                              className="w-full text-left px-4 py-2 hover:bg-amber-500 hover:text-white"
+                            >
+                              {type}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                  </div>
+                </div>
+                
+                {filteredDishes.length === 0 && (
+                  <p className="text-gray-400 text-center mt-10">No items found.</p>
+                )}
+          
+                <div className="grid h-full overflow-y-auto grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 hide-scrollbar">
+                  {filteredDishes.map((item, index) => {
+                    const size = selectedSize[item.name] || "S";
+                    const displayPrice = item.basePrice + item.sizePrices[size];
+
+                    return (
+                      <div
+                        key={index}
+                        className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center w-full max-w-[320px] mx-auto"
+                      >
+                        <img
+                          src={item.img}
+                          className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
+                        />
+
+                        <p className="text-sm text-center font-semibold">{item.name}</p>
+
+                        <p className="text-sm mt-1 font-semibold text-green-400">
+                          {displayPrice.toFixed(2)} AED
+                        </p>
+
+                        <p className="text-xs text-gray-400 mt-1">{item.bowls}</p>
+
+                        <div className="flex gap-2 mt-2">
+                          {item.sizes.map((s) => {
+                            const activeSize = selectedSize[item.name] || "S";
+
+                            return (
+                              <button
+                                key={s}
+                                onClick={() => handleSizeSelect(item.name, s)}
+                                className={`px-2 rounded-md border ${activeSize === s
+                                  ? "bg-amber-500 text-white"   // 🟧 ORANGE
+                                  : "border-gray-400"
+                                  }`}
+                              >
+                                {s}
+                              </button>
+                            );
+                          })}
+
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            handleAddToCart(item);
+
+                          }}
+                          className={`rounded-xl px-3 py-1 mt-5 ${isItemInCart(item)
+                            ? "bg-green-500"
+                            : "bg-amber-500 hover:bg-amber-600"
+                            }`}
+                        >
+                          {isItemInCart(item) ? "Added" : "Add"}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+
+              </div>
+            </div>
+    </div>
+  )
+}
+
+export default Body;

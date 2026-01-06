@@ -1,6 +1,6 @@
 import React from "react";
 import { Trash } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X } from 'lucide-react';
 import Receipt from "./Receipt";
 
@@ -13,7 +13,7 @@ const mode = [
   { id: 3, label: "Delivery" },
 ];
 
-function Order({ cart, onDelete, onClose, orderType, setOrderType }) {
+function Order({ cart, onDelete, onClose, orderType, setOrderType, onComplete }) {
 
   const subTotal = cart.reduce(
     (total, item) => total + Number(item.price) * item.qty,
@@ -23,7 +23,7 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType }) {
 
 
   return (
-    <div className="bg-gray-900 w-full h-full  p-4 sm:p-6 text-white flex flex-col">
+    <div className="bg-gray-900 w-100 h-full  p-4 sm:p-6 text-white flex flex-col fixed">
       {/* Header */}
       <div className="flex flex-row justify-between">
         <h2 className="text-2xl font-semibold mb-4">Orders #34562</h2>
@@ -104,18 +104,31 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType }) {
         </div>
 
         <button
-          onClick={() => setShowReceipt(true)}
-          className=" w-full bg-orange-500 py-3 rounded-xl text-1g font-semibold cursor-pointer ">
+          onClick={() => cart.length > 0 && setShowReceipt(true)}
+          className={`
+    w-full py-3 rounded-xl text-lg font-semibold
+    ${cart.length === 0
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
+            }
+  `}
+          disabled={cart.length === 0} 
+        >
           Order now
         </button>
+
+
         {showReceipt && (
           <Receipt
             cart={cart}
             orderType={orderType}
             onClose={() => setShowReceipt(false)}
+            onComplete={() => {
+              setShowReceipt(false);
+              onComplete();
+            }}
           />
         )}
-
       </div>
     </div>
   );

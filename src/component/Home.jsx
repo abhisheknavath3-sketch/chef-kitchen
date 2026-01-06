@@ -1,83 +1,17 @@
 import React, { useState } from "react";
-import { Search, ChevronDown, Presentation } from "lucide-react";
 import Order from "./Order";
 import Sidebar from "./Sidebar";
 import { ShoppingCart } from 'lucide-react';
+import { dishes, tabs } from "../constant/index";
+import Header from "./Header";
+import Body from "./Body";
 
-
-
-const tabs = [
-  { id: "today", label: "Today Special" },
-  { id: "our", label: "Our Special" },
-  { id: "south", label: "South Indian Special" },
-];
-
-
-const dishes = [
-
-
-  {
-    img: "/image1.png",
-    name: "Healthy noodle with spinach leaf",
-    basePrice: 3.29,
-    sizePrices: { S: 0, M: 1, L: 2 },
-    bowls: "22 Bowls available",
-    sizes: ["S", "M", "L"],
-    category: "our",
-  },
-  {
-    img: "/image2.png",
-    name: "Hot spicy fried rice with omelet",
-    basePrice: 3.29,
-    sizePrices: { S: 0, M: 1, L: 2 },
-    bowls: "13 Bowls available",
-    sizes: ["S", "M", "L"],
-    category: "today",
-  },
-  {
-    img: "/image3.png",
-    name: "Spicy noodle with special omelette",
-    basePrice: 5.29,
-    sizePrices: { S: 0, M: 1, L: 2 },
-    bowls: "17 Bowls available",
-    sizes: ["S", "M", "L"],
-    category: "our",
-  },
-  {
-    img: "/image4.png",
-    name: "Healthy Noodle with spinach leaf",
-    basePrice: 25.00,
-    sizePrices: { S: 0, M: 1, L: 2 },
-    bowls: "22 Bowls available",
-    sizes: ["S", "M", "L"],
-    category: "south",
-  },
-  {
-    img: "/image5.png",
-    name: "Hot Spicy fried rice with omelet",
-    basePrice: 26.00,
-    sizePrices: { S: 0, M: 6, L: 15 },
-    bowls: "13 Bowls available",
-    sizes: ["S", "M", "L"],
-    category: "our",
-  },
-  {
-    img: "/image6.png",
-    name: "Spicy Noodle with special omelette",
-    basePrice: 27.00,
-    sizePrices: { S: 0, M: 5, L: 15 },
-    bowls: "17 Bowls available",
-    sizes: ["S", "M", "L"],
-    category: "south",
-  },
-];
 
 
 function Home() {
   const [active, setActive] = useState("today");
   const [cart, setCartItems] = useState([]);
   const [showOrder, setShowOrder] = useState(false);
-
   const [orderType, setOrderType] = useState("Dine In");
   const [showType, setShowType] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date)
@@ -153,22 +87,59 @@ function Home() {
 
 
   return (
-    <div className="w-full bg-gray-800 text-white min-h-screen lg:ml-20">
-      <div className="flex w-full">
+    // <div className="w-full flex h-screen overflow-hidden bg-red-300">
+    //   {/* sidebar section  */}
+    //   <div className="w-40 bg-green-400 h-full"></div>
+    //   {/* list page section  */}
+    // <div className="bg-white flex flex-col w-full h-full">
+    //   {/* header  */}
+    //   <div className="h-36 bg-yellow-200"></div>
+    //   {/* list  */}
+    //   <div className="w-full grid grid-cols-4 gap-4 overflow-y-auto h-full bg-cyan-400">
+    //     {
+    //       new Array(100).fill(" ").map((_,index)=>
+    //       <div className="h-[200px] bg-white" key={index}>{index}</div>)
+    //     }
+    //   </div>
+    // </div>
+    // </div>
+    <div className="w-full text-white bg-gray-800 h-screen flex flex-col lg:ml-20">
+      <div className="flex flex-col w-full h-full ">
 
-        <div className="flex flex-col lg:flex-row w-full relative">
+        <div className="flex flex-col h-full lg:flex-row w-full relative">
 
           <Sidebar />
 
 
           <div
             className={`px-4 sm:px-6 transition-all duration-300 
-               ${showOrder ? "w-full lg:w-[65%]" : "w-full"} 
-               bg-gray-800 h-screen flex flex-col`}
+    ${showOrder ? "w-full lg:w-[65%]" : "w-full"} 
+    bg-gray-800 overflow-y-auto flex flex-col flex-1`}
           >
 
+            <Header
+              currentDateTime={currentDateTime}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              active={active}
+              setActive={setActive}
+              tabs={tabs}
 
+            />
 
+            <Body
+              filteredDishes={filteredDishes}
+              showType={showType}
+              setShowType={setShowType}
+              orderType={orderType}
+              setOrderType={setOrderType}
+              selectedSize={selectedSize}
+              handleSizeSelect={handleSizeSelect}
+              handleAddToCart={handleAddToCart}
+              isItemInCart={isItemInCart}
+            />
+
+            {/* 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4">
               <div>
                 <h1 className="text-4xl head">Chef Kitchen</h1>
@@ -192,13 +163,18 @@ function Home() {
 
               </div>
             </div>
-
-            <div className="flex text-white mt-4 space-x-6 overflow-x-auto hide-scrollbar">
+            <div className="flex text-white mt-4 gap-6 overflow-x-auto hide-scrollbar">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActive(tab.id)}
-                  className={`pb-1 transition-all ${active === tab.id ? "text-orange-400" : "text-white cursor-pointer"}`}>
+                  className={`
+        pb-1 transition-all
+        whitespace-nowrap
+        text-sm md:text-base
+        ${active === tab.id ? "text-orange-400" : "text-white cursor-pointer"}
+      `}
+                >
                   {tab.label}
                 </button>
               ))}
@@ -207,20 +183,31 @@ function Home() {
             <div className="relative w-full mt-3">
               <div className="w-full border-b-2 border-gray-600"></div>
 
-              <div className="absolute top-0 border-b-5 border-orange-400 rounded-full transition-all"
+              <div
+                className="
+    absolute top-0 border-b-4 border-orange-400 rounded-full
+    transition-all duration-300
+    w-1/3 md:w-[90px]
+  "
                 style={{
-                  width: "90px",
                   left:
-                    active === "today"
-                      ? "0px"
-                      : active === "our"
-                        ? "130px"
-                        : "250px",
+                    window.innerWidth >= 768
+                      ? active === "today"
+                        ? "0px"
+                        : active === "our"
+                          ? "125px"
+                          : "250px"
+                      : active === "today"
+                        ? "0%"
+                        : active === "our"
+                          ? "33.33%"
+                          : "66.66%",
                 }}
-              ></div>
-            </div>
+              />
+            </div> */}
 
-            <div className="flex-1 overflow-y-auto hide-scrollbar">
+
+            {/* <div className="flex-1 overflow-y-auto hide-scrollbar">
               <div className="mt-6 w-full  ">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
 
@@ -233,7 +220,7 @@ function Home() {
 
                   <div className="justify-end flex flex-row gap-3">
                     <div className="relative">
-                      {/* Selected button */}
+                     
                       <button
                         onClick={() => setShowType(!showType)}
                         className="flex items-center gap-1 bg-gray-900 px-4 py-2 rounded-lg"
@@ -244,7 +231,7 @@ function Home() {
                         />
                       </button>
 
-                      {/* Dropdown options */}
+                      
                       {showType && (
                         <div className="absolute right-0 mt-2 w-30 bg-gray-900 rounded-lg shadow-lg overflow-hidden z-10">
                           {["Dine In", "Take Away", "Delivery"].map((type) => (
@@ -271,13 +258,13 @@ function Home() {
 
 
 
-                {/* No items found */}
+                
                 {filteredDishes.length === 0 && (
                   <p className="text-gray-400 text-center mt-10">No items found.</p>
                 )}
 
 
-                {/* Dishes grid */}
+                
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 bg-gray-800">
                   {filteredDishes.map((item, index) => {
                     const size = selectedSize[item.name] || "S";
@@ -302,24 +289,29 @@ function Home() {
                         <p className="text-xs text-gray-400 mt-1">{item.bowls}</p>
 
                         <div className="flex gap-2 mt-2">
-                          {item.sizes.map((s) => (
-                            <button
-                              key={s}
-                              onClick={() => handleSizeSelect(item.name, s)}
-                              className={`px-2 rounded-md border ${selectedSize[item.name] === s
-                                ? "bg-amber-500 text-white"
-                                : "border-gray-400"
-                                }`}
-                            >
-                              {s}
-                            </button>
-                          ))}
+                          {item.sizes.map((s) => {
+                            const activeSize = selectedSize[item.name] || "S";
+
+                            return (
+                              <button
+                                key={s}
+                                onClick={() => handleSizeSelect(item.name, s)}
+                                className={`px-2 rounded-md border ${activeSize === s
+                                  ? "bg-amber-500 text-white"   // 🟧 ORANGE
+                                  : "border-gray-400"
+                                  }`}
+                              >
+                                {s}
+                              </button>
+                            );
+                          })}
+
                         </div>
 
                         <button
                           onClick={() => {
                             handleAddToCart(item);
-                           
+
                           }}
                           className={`rounded-xl px-3 py-1 mt-5 ${isItemInCart(item)
                             ? "bg-green-500"
@@ -334,10 +326,13 @@ function Home() {
                 </div>
 
               </div>
-            </div>
+            </div> */}
+
+
+
+
+
           </div>
-
-
           {showOrder && (
             <div
               className="
@@ -357,6 +352,11 @@ function Home() {
                 onClose={() => setShowOrder(false)}
                 orderType={orderType}
                 setOrderType={setOrderType}
+                onComplete={() => {
+                  setCartItems([]);      // ✅ clear cart
+                  setSelectedSize({});    // 🔥 RESET SIZES
+                  setShowOrder(false);  // ✅ close order panel
+                }}
               />
 
             </div>
@@ -364,34 +364,36 @@ function Home() {
 
         </div>
       </div>
-      {/* FLOATING SHOPPING CART */}
-      <button
-        onClick={() => setShowOrder(true)}
-        className="
-    fixed bottom-6 right-6 z-50
-    bg-amber-500
-    w-14 h-14
-    rounded-full
-    flex items-center justify-center
-    shadow-lg
-  "
-      >
-        <ShoppingCart className="w-6 h-6 text-white" />
-
-        {cartCount > 0 && (
-          <span className="
-      absolute -top-1 -right-1
-      bg-red-500 text-white
-      text-xs font-bold
-      w-5 h-5
-      flex items-center justify-center
+      {!showOrder && (
+        <button
+          onClick={() => setShowOrder(true)}
+          className="
+      fixed bottom-6 right-6 z-50
+      bg-amber-500
+      w-14 h-14
       rounded-full
-    ">
-            {cartCount}
-          </span>
-          
-        )}
-      </button>
+      flex items-center justify-center
+      shadow-lg
+    "
+        >
+          <ShoppingCart className="w-6 h-6 text-white" />
+
+          {cartCount > 0 && (
+            <span
+              className="
+          absolute -top-1 -right-1
+          bg-red-500 text-white
+          text-xs font-bold
+          w-5 h-5
+          flex items-center justify-center
+          rounded-full
+        "
+            >
+              {cartCount}
+            </span>
+          )}
+        </button>
+      )}
 
 
     </div>
