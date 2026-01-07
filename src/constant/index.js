@@ -15,6 +15,7 @@ export const dishes = [
     bowls: "22 Bowls available",
     sizes: ["S", "M", "L"],
     category: "our",
+    availableFor: ["Dine In", "Delivery"]
   },
   {
     img: "/image2.png",
@@ -24,6 +25,8 @@ export const dishes = [
     bowls: "13 Bowls available",
     sizes: ["S", "M", "L"],
     category: "today",
+    availableFor: ["Dine In", "Take Away","Delivery"]
+
   },
   {
     img: "/image3.png",
@@ -33,6 +36,8 @@ export const dishes = [
     bowls: "17 Bowls available",
     sizes: ["S", "M", "L"],
     category: "our",
+    availableFor: ["Dine In", "Take Away"]
+
   },
   {
     img: "/image4.png",
@@ -42,6 +47,8 @@ export const dishes = [
     bowls: "22 Bowls available",
     sizes: ["S", "M", "L"],
     category: "south",
+    availableFor: ["Dine In","Delivery","Take Away"]
+
   },
   {
     img: "/image5.png",
@@ -51,6 +58,7 @@ export const dishes = [
     bowls: "13 Bowls available",
     sizes: ["S", "M", "L"],
     category: "our",
+    availableFor: ["Dine In", "Take Away"]
   },
   {
     img: "/image6.png",
@@ -60,6 +68,7 @@ export const dishes = [
     bowls: "17 Bowls available",
     sizes: ["S", "M", "L"],
     category: "south",
+    availableFor: ["Dine In", "Delivery"]
   },
   {
     img: "/image7.png",
@@ -69,6 +78,7 @@ export const dishes = [
     bowls: "10 Bowls available",
     sizes: ["S", "M", "L"],
     category: "our",
+    availableFor: ["Dine In", "Take Away"]
   },
   {
     img: "/image8.png",
@@ -78,6 +88,7 @@ export const dishes = [
     bowls: "5 Bowls available",
     sizes: ["S", "M", "L"],
     category: "south",
+    availableFor: ["Dine In", "Take Away","Delivery"]
   },
   {
     img: "/image9.png",
@@ -87,8 +98,8 @@ export const dishes = [
     bowls: "19 Bowls available",
     sizes: ["S", "M", "L"],
     category: "today",
+    availableFor: ["Dine In", "Delivery"]
   },
 ];
 
- 
-  
+

@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { X } from "lucide-react";
 import Success from "./Success";
 import { useState } from "react";
 import { useEffect } from "react";
+import { OrderContext } from "../context/OrderContext";
 
 
 
 
-function Receipt({ cart, orderType, onClose, onComplete }) {
+function Receipt() {
+
+  
+  const{
+    cart, orderType, onClose, onComplete,onRemove,showSuccess, setShowSuccess
+  }=useContext(OrderContext)
+
+
   const subTotal = cart.reduce(
     (total, item) => total + item.price * item.qty,
     0
@@ -15,7 +23,7 @@ function Receipt({ cart, orderType, onClose, onComplete }) {
 
   const discount = subTotal * 0.05;
   const total = subTotal - discount;
-  const [showSuccess, setShowSuccess] = useState(false);
+ 
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -95,7 +103,7 @@ function Receipt({ cart, orderType, onClose, onComplete }) {
 
         {/* Button */}
         <button
-          onClick={() => setShowSuccess(true)}
+          onClick={onRemove}
           className="w-full mt-6 bg-orange-500 py-3 rounded-xl font-semibold"
         >
           Confirm Order

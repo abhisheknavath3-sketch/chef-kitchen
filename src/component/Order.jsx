@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Trash } from "lucide-react";
 import { useState } from "react";
 import { X } from 'lucide-react';
 import Receipt from "./Receipt";
+import { OrderContext } from "../context/OrderContext";
 
 
 
@@ -13,25 +14,42 @@ const mode = [
   { id: 3, label: "Delivery" },
 ];
 
-function Order({ cart, onDelete, onClose, orderType, setOrderType, onComplete }) {
+function Order() {
+
+  const {
+    cart, handleDelete, onClose, orderType, setOrderType, onComplete,
+    showReceipt, setShowReceipt, setShowSuccess
+
+  } = useContext(OrderContext)
 
   const subTotal = cart.reduce(
     (total, item) => total + Number(item.price) * item.qty,
     0
   );
-  const [showReceipt, setShowReceipt] = useState(false);
+
 
 
   return (
-    <div className="bg-gray-900 w-100 h-full  p-4 sm:p-6 text-white flex flex-col fixed">
+    <div
+      className="
+    bg-gray-900 text-white flex flex-col
+    fixed top-0 right-0 z-50
+    w-full h-full
+    sm:w-[420px] sm:h-screen
+    p-4 sm:p-6
+  "
+    >
+
       {/* Header */}
       <div className="flex flex-row justify-between">
-        <h2 className="text-2xl font-semibold mb-4">Orders #34562</h2>
+        <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+          Orders #34562
+        </h2>
         <button onClick={onClose} className=" text-2xl mb-8"><X /></button>
       </div>
 
       {/* Mode buttons */}
-      <div className="flex text-white mt-4 space-x-10">
+      <div className="flex flex-wrap sm:flex-nowrap text-white mt-4 gap-3 sm:gap-6">
         {["Dine In", "Take Away", "Delivery"].map((mode) => (
           <button
             key={mode}
@@ -60,15 +78,16 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType, onComplete })
           <div key={i} className="mb-4">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <img src={item.img} className="w-12 h-12 rounded-full" />
+                <img src={item.img} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" />
                 <div>
-                  <p className="font-semibold">{item.name}</p>
+                  <p className="font-semibold text-sm sm:text-base">{item.name}</p>
                   <p className="text-xs text-gray-400">Size: {item.size}</p>
-                  <p className="text-gray-400 text-sm">AED {item.price}</p>
+                  <p className="text-gray-400 text-xs sm:text-sm">AED {item.price}</p>
+
                 </div>
               </div>
 
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3 sm:gap-6">
                 <span className="bg-gray-700 px-3 py-1 rounded-lg">{item.qty}</span>
                 <p>{(Number(item.price) * item.qty).toFixed(2)}</p>
               </div>
@@ -78,10 +97,10 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType, onComplete })
               <input
                 type="text"
                 placeholder="Order Note..."
-                className="flex-1 bg-gray-800 px-3 py-4 rounded-lg text-sm outline-none"
+                className="flex-1 bg-gray-800 px-3 py-2 sm:py-3 rounded-lg text-sm outline-none"
               />
               <button
-                onClick={() => onDelete(item.name, item.size)}
+                onClick={() => handleDelete(item.name, item.size)}
                 className="border border-amber-600 p-2 rounded-lg"
               >
                 <Trash className="text-amber-500 w-5 h-5" />
@@ -104,15 +123,19 @@ function Order({ cart, onDelete, onClose, orderType, setOrderType, onComplete })
         </div>
 
         <button
-          onClick={() => cart.length > 0 && setShowReceipt(true)}
-          className={`
-    w-full py-3 rounded-xl text-lg font-semibold
-    ${cart.length === 0
+          onClick={() => {
+            if (cart.length > 0) {
+              setShowSuccess(false); 
+              setShowReceipt(true);
+            }
+          }}
+          className={`w-full py-3 rounded-xl text-base sm:text-lg font-semibold
+           ${cart.length === 0
               ? "bg-gray-600 cursor-not-allowed"
               : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
             }
   `}
-          disabled={cart.length === 0} 
+          disabled={cart.length === 0}
         >
           Order now
         </button>

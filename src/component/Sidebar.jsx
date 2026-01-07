@@ -75,7 +75,7 @@ function Sidebar() {
                                     onClick={()=>navigate("/")}/>
       </div>
 
-      <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full h-10 bg-[#1F1D2B] flex justify-around items-center border-t border-gray-800">
+      <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full h-10 bg-[#1F1D2B] flex justify-around items-center border-t border-gray-800 opacity-65">
         <GoHome className="text-[#F99147] text-2xl" />
         <CiDiscount1 className="text-[#F99147] text-2xl" />
         <CiHeart className="text-[#F99147] text-2xl" />

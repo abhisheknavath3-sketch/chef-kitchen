@@ -5,3 +5,7 @@ html, body, #root {
   background-color: #1f2937; /* Tailwind gray-800 */
   min-height: 100%;
 }
+html,
+body {
+  overflow-x: hidden;
+}

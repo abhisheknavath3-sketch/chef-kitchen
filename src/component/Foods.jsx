@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import Order from "./Order";
+import { OrderContext } from "../context/OrderContext";
 
-export default function Foods({ item }) {
+export default function Foods() {
+
+    const{
+        item
+    }=useContext(OrderContext)
+
     return (
         <div className="bg-[#1F2633] p-4 rounded-2xl w-[220px] cursor-pointer 
                     border-2 border-transparent hover:border-blue-400 duration-300">

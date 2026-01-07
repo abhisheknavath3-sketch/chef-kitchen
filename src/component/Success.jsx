@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CheckCircle } from "lucide-react";
+import { OrderContext } from "../context/OrderContext";
 
-function Success({ onDone }) {
+function Success() {
+  
+  const{
+    onDone
+  }=useContext(OrderContext)
+
+
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
       <div className="bg-gray-900 text-white w-[320px] rounded-2xl p-6 text-center">
