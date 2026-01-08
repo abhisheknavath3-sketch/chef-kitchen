@@ -33,10 +33,10 @@ function Order() {
     <div
       className="
     bg-gray-900 text-white flex flex-col
-    fixed top-0 right-0 z-50
+    fixed top-0 right-4 z-50
     w-full h-full
     md:w-[420px] sm:h-screen
-    p-2 sm:p-6
+    p-4 sm:p-6
   "
     >
 
