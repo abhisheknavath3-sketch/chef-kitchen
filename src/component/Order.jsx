@@ -34,7 +34,7 @@ function Order() {
       className="
     bg-gray-900 text-white flex flex-col
      top-0 right-0 z-50
-    w-110 h-full
+    w-full h-full
     sm:h-screen
     p-4 sm:p-6
   "
