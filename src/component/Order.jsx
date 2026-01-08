@@ -36,7 +36,7 @@ function Order() {
     fixed top-0 right-8 z-50
     w-full h-full
     md:w-[420px] sm:h-screen
-    p-4 sm:p-6 
+    p-2 sm:p-6 
   "
     >
 

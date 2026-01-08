@@ -27,7 +27,7 @@ function Home() {
 
           <div
             className={`px-2 sm:pl-4 transition-all duration-300 
-    ${showOrder ? "w-full lg:w-[70%]" : "w-full"} 
+    ${showOrder ? "w-full lg:w-[60%]" : "w-full"} 
     bg-gray-800 overflow-y-auto flex flex-col flex-1`}
           >
 
@@ -41,7 +41,7 @@ function Home() {
               className="
     fixed inset-0 z-50
     lg:static lg:inset-auto
-    w-full lg:w-[30%]
+    w-full lg:w-[40%]
     h-screen
     bg-gray-900
     border-t lg:border-t-0 lg:border-l border-gray-700
