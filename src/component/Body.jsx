@@ -120,7 +120,7 @@ const Body = () => {
                       handleAddToCart(item);
 
                     }}
-                    className={`rounded-xl px-3 py-1 mt-5 ${isItemInCart(item)
+                    className={`rounded-xl px-3 py-2 mt-6 ${isItemInCart(item)
                       ? "bg-green-500"
                       : "bg-amber-500 hover:bg-amber-600"
                       }`}

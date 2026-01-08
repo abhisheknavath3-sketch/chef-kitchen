@@ -37,18 +37,18 @@ function Sidebar() {
 
               {active === index && (
                 <>
-                  <div className="absolute  -left-3 w-25 h-20 bg-gray-800 rounded-l-2xl ">
-                    <div className="absolute top-0 -left-3 w-25 h-20 bg-gray-800 rounded-l-2xl ">
+                  <div className="absolute  -left-2 w-25 h-20 bg-gray-800 rounded-l-2xl ">
+                    <div className="absolute   top-0  left-1  bg-red-500 rounded-l-2xl ">
                       <div className="absolute  -left-20 w-10 h-20 bg-gray-800 rounded-l-xl" />
 
-                      <div className="absolute right-2 -top-10.5 w-10 h-10  z-10">
-                        <div className="relative left-4.5 top-2.5 w-7.5 h-8 bg-gray-800">
+                      <div className="absolute -right-15 -top-10.5 w-10 h-10  z-10">
+                        <div className="relative left-4.5 top-2.5 w-7.5 rounded-tl-full h-8 bg-gray-800">
 
-                          <div className="absolute top-0 right-0 w-8 h-8 bg-[#1F1D2B] rounded-bl-full rotate-270" />
+                          <div className="absolute top-0 right-0 w-8 h-8 bg-[#1F1D2B] rounded-bl-full  rounded-tr-full rotate-270" />
                         </div>
                       </div>
 
-                      <div className="absolute right-2 top-17.5 w-10 h-10  z-10">
+                      <div className="absolute -right-15 top-17.5 w-10 h-10 z-10">
                         <div className="relative left-4.5 top-2.5 w-7.5 h-8 bg-gray-800">
 
                           <div className="absolute top-0 right-0 w-8 h-8 bg-[#1F1D2B] rounded-bl-full rotate-180" />
@@ -62,7 +62,7 @@ function Sidebar() {
               <Icon
                 className={` relative z-10 text-2xl transition-all duration-300
                   ${active === index
-                    ? " text-white bg-orange-400 rounded-lg w-13 h-13 p-2"
+                    ? " text-white bg-orange-400 rounded-lg w-11 h-11 p-2"
                     : "text-orange-400 hover:text-white"
                   }
                 `}

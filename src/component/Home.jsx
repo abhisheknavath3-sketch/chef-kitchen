@@ -39,13 +39,7 @@ function Home() {
           {showOrder && (
             <div
               className="
-    fixed inset-0 z-50
-    lg:static lg:inset-auto
-    w-full lg:w-[40%]
-    h-screen
-    bg-gray-900
-    border-t lg:border-t-0 lg:border-l border-gray-700
-    flex flex-col
+    
   "
             >
 
@@ -60,7 +54,7 @@ function Home() {
         <button
           onClick={() => setShowOrder(true)}
           className="
-      fixed bottom-9 right-6 z-50
+      fixed bottom-10 right-6 z-50
       bg-amber-500
       w-13 h-13 
       rounded-full
