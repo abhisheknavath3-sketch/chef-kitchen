@@ -72,7 +72,7 @@ const Body = () => {
             <p className="text-gray-400 text-center mt-10">No items found.</p>
           )}
 
-          <div className={`grid h-full overflow-y-auto grid-cols-2 sm:grid-cols-2  gap-6 sm:gap-8 py-10 hide-scrollbar pb-26 ${showOrder ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
+          <div className={`grid h-full overflow-y-auto grid-cols-2 sm:grid-cols-2  gap-6 sm:gap-8 py-10 hide-scrollbar pb-25 ${showOrder ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
             {filteredDishes.map((item, index) => {
               const size = selectedSize[item.name] || "S";
               const displayPrice = item.basePrice + item.sizePrices[size];
@@ -80,7 +80,7 @@ const Body = () => {
               return (
                 <div
                   key={index}
-                  className="bg-gray-900 rounded-3xl p-4 flex flex-col items-center w-full max-w-[320px] mx-auto"
+                  className="bg-gray-900 rounded-3xl p-6 flex flex-col items-center w-full max-w-[250px] pb-2 mx-auto"
                 >
                   <img
                     src={item.img}
@@ -120,7 +120,7 @@ const Body = () => {
                       handleAddToCart(item);
 
                     }}
-                    className={`rounded-xl px-3 py-2 mt-6 ${isItemInCart(item)
+                    className={`rounded-xl px-9 py-0.5 mt-6 ${isItemInCart(item)
                       ? "bg-green-500"
                       : "bg-amber-500 hover:bg-amber-600"
                       }`}
