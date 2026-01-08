@@ -39,12 +39,12 @@ const Header = () => {
         </div>
 
         {/* MOBILE SEARCH */}
-        <div className="relative sm:hidden mt-2 text-sm  ">
+        <div className="relative sm:hidden mt-1 text-sm  ">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 " />
           <input
             type="text"
             placeholder="Search for food, coffee, etc.."
-            className="h-10 w-full pl-10 pr-4 rounded-2xl bg-gray-800 border border-gray-600 outline-none"
+            className="h-8 w-full pl-10 pr-4 rounded-2xl bg-gray-800 border border-gray-600 outline-none"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -84,21 +84,21 @@ const Header = () => {
           className="
     absolute top-0 border-b-4 border-orange-400 rounded-full 
     transition-all duration-300
-    w-[60px]
+    w-1/6 md:w-[70px]
   "
           style={{
             left:
               window.innerWidth >= 768
                 ? active === "today"
-                  ? "10px"
+                  ? "0px"
                   : active === "our"
                     ? "125px"
                     : "250px"
                 : active === "today"
-                  ? "5%"
+                  ? "0%"
                   : active === "our"
-                    ? "33.33%"
-                    : "66.66%",
+                    ? "32.33%"
+                    : "64.66%",
           }}
         />
       </div>
