@@ -111,7 +111,7 @@ function Order() {
       </div>
 
       {/* Footer */}
-      <div className="justify-end border-t border-gray-700 pt-4 mt-auto  ">
+      <div className="justify-end border-t border-gray-700 pt-4 mt-auto pb-6 ">
         <div className="flex justify-between text-gray-400 mb-5">
           <p>Discount</p>
           <p>5%</p>
