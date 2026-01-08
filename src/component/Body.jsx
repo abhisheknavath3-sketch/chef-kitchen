@@ -71,7 +71,7 @@ const Body = () => {
             <p className="text-gray-400 text-center mt-10">No items found.</p>
           )}
 
-          <div className="grid h-full overflow-y-auto grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 hide-scrollbar">
+          <div className="grid h-full overflow-y-auto grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 py-10 hide-scrollbar pb-20">
             {filteredDishes.map((item, index) => {
               const size = selectedSize[item.name] || "S";
               const displayPrice = item.basePrice + item.sizePrices[size];

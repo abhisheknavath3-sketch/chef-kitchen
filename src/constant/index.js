@@ -118,7 +118,7 @@ export const dishes = [
     bowls: "19 Bowls available",
     sizes: ["S", "M", "L"],
     category: "south",
-    availableFor: ["Delivery","Take Away"]
+    availableFor: ["Delivery","Take Away","Dine In"]
   },
   {
     img: "/image12.png",
@@ -128,7 +128,7 @@ export const dishes = [
     bowls: "19 Bowls available",
     sizes: ["S", "M", "L"],
     category: "today",
-    availableFor: ["Delivery","Take Away"]
+    availableFor: ["Delivery","Take Away","Dine In"]
   },
 ];
 
