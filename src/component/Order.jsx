@@ -35,7 +35,7 @@ function Order() {
     bg-gray-900 text-white flex flex-col
     fixed top-0 right-0 z-50
     w-full h-full
-    sm:w-[480px] sm:h-screen
+    md:w-[420px] sm:h-screen
     p-4 sm:p-6
   "
     >
