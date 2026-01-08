@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Order from "./Order";
 import { OrderContext } from "../context/OrderContext";
 
 export default function Foods() {

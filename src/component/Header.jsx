@@ -44,7 +44,7 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search for food, coffee, etc.."
-            className="h-8 w-full pl-10 pr-4 rounded-2xl bg-gray-800 border border-gray-600 outline-none"
+            className="h-10 w-full pl-10 pr-4 rounded-2xl bg-gray-800 border border-gray-600 outline-none"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -84,18 +84,18 @@ const Header = () => {
           className="
     absolute top-0 border-b-4 border-orange-400 rounded-full 
     transition-all duration-300
-    w-1/3 md:w-[90px]
+    w-[60px]
   "
           style={{
             left:
               window.innerWidth >= 768
                 ? active === "today"
-                  ? "0px"
+                  ? "10px"
                   : active === "our"
                     ? "125px"
                     : "250px"
                 : active === "today"
-                  ? "0%"
+                  ? "5%"
                   : active === "our"
                     ? "33.33%"
                     : "66.66%",

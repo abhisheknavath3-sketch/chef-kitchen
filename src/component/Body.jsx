@@ -38,7 +38,6 @@ const Body = () => {
         flex items-center gap-1
         bg-gray-900 px-3 py-2
         rounded-lg
-        text-sm
         whitespace-nowrap
       "
               >
@@ -49,7 +48,7 @@ const Body = () => {
               </button>
 
               {showType && (
-                <div className="absolute right-0 mt-2 w-40 bg-gray-900 rounded-lg shadow-lg z-20">
+                <div className="absolute right-0 mt-2 opacity-85 w-40 bg-gray-900 rounded-lg shadow-lg z-20">
                   {["Dine In", "Take Away", "Delivery"].map((type) => (
                     <button
                       key={type}
@@ -67,7 +66,6 @@ const Body = () => {
             </div>
 
           </div>
-
 
           {filteredDishes.length === 0 && (
             <p className="text-gray-400 text-center mt-10">No items found.</p>

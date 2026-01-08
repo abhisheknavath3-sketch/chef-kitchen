@@ -46,7 +46,7 @@ export const dishes = [
     sizePrices: { S: 0, M: 1, L: 2 },
     bowls: "22 Bowls available",
     sizes: ["S", "M", "L"],
-    category: "south",
+    category: "our",
     availableFor: ["Dine In","Delivery","Take Away"]
 
   },
@@ -57,8 +57,8 @@ export const dishes = [
     sizePrices: { S: 0, M: 6, L: 15 },
     bowls: "13 Bowls available",
     sizes: ["S", "M", "L"],
-    category: "our",
-    availableFor: ["Dine In", "Take Away"]
+    category: "south",
+    availableFor: ["Dine In", "Take Away","Delivery"]
   },
   {
     img: "/image6.png",
@@ -68,7 +68,7 @@ export const dishes = [
     bowls: "17 Bowls available",
     sizes: ["S", "M", "L"],
     category: "south",
-    availableFor: ["Dine In", "Delivery"]
+    availableFor: ["Dine In", "Delivery","Take Away"]
   },
   {
     img: "/image7.png",
@@ -78,7 +78,7 @@ export const dishes = [
     bowls: "10 Bowls available",
     sizes: ["S", "M", "L"],
     category: "our",
-    availableFor: ["Dine In", "Take Away"]
+    availableFor: ["Dine In", "Take Away","Delivery"]
   },
   {
     img: "/image8.png",
@@ -87,8 +87,8 @@ export const dishes = [
     sizePrices: { S: 0, M: 11, L: 20 },
     bowls: "5 Bowls available",
     sizes: ["S", "M", "L"],
-    category: "south",
-    availableFor: ["Dine In", "Take Away","Delivery"]
+    category: "today",
+    availableFor: [ "Dine In","Take Away"]
   },
   {
     img: "/image9.png",
@@ -97,8 +97,38 @@ export const dishes = [
     sizePrices: { S: 0, M: 11, L: 20 },
     bowls: "19 Bowls available",
     sizes: ["S", "M", "L"],
-    category: "today",
+    category: "south",
+    availableFor: ["Dine In", "Delivery",]
+  },
+  {
+    img: "/image10.png",
+    name: " Noodle with omelette hot",
+    basePrice: 27.00,
+    sizePrices: { S: 0, M: 11, L: 20 },
+    bowls: "19 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "our",
     availableFor: ["Dine In", "Delivery"]
+  },
+  {
+    img: "/image11.png",
+    name: "Special spicy rice hot",
+    basePrice: 28.00,
+    sizePrices: { S: 0, M: 11, L: 20 },
+    bowls: "19 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "south",
+    availableFor: ["Delivery","Take Away"]
+  },
+  {
+    img: "/image12.png",
+    name: " chikan hot spicy special ",
+    basePrice: 35.00,
+    sizePrices: { S: 0, M: 11, L: 20 },
+    bowls: "19 Bowls available",
+    sizes: ["S", "M", "L"],
+    category: "today",
+    availableFor: ["Delivery","Take Away"]
   },
 ];
 
