@@ -39,7 +39,7 @@ const Header = () => {
         </div>
 
         {/* MOBILE SEARCH */}
-        <div className="relative sm:hidden mt-1 text-sm  ">
+        <div className="relative sm:hidden mt-10 text-sm  ">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 " />
           <input
             type="text"
