@@ -41,7 +41,7 @@ function Home() {
               className="
     fixed inset-0 z-50
     lg:static lg:inset-auto
-    w-90 lg:w-[30%]
+    w-full lg:w-[30%]
     h-screen
     bg-gray-900
     border-t lg:border-t-0 lg:border-l border-gray-700
