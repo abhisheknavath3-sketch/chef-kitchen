@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Trash } from "lucide-react";
-import { useState } from "react";
 import { X } from 'lucide-react';
 import Receipt from "./Receipt";
 import { OrderContext } from "../context/OrderContext";
@@ -44,7 +43,7 @@ function Order() {
       {/* Header */}
       <div className="flex flex-row justify-between">
         <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-          Orders #34562
+          Orders
         </h2>
         <button onClick={onClose} className=" text-2xl mb-8"><X /></button>
       </div>
@@ -75,40 +74,47 @@ function Order() {
       <div className="border-b border-gray-700 mb-4 "></div>
 
       <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar bg-gray-900">
-        {cart.map((item, i) => (
-          <div key={i} className="mb-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <img src={item.img} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" />
-                <div>
-                  <p className="font-semibold text-sm sm:text-base">{item.name}</p>
-                  <p className="text-xs text-gray-400">Size: {item.size}</p>
-                  <p className="text-gray-400 text-xs sm:text-sm">AED {item.price}</p>
 
+        {cart.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-gray-400">
+            <p className="text-lg font-semibold">Order is empty</p>
+          </div>
+        ) : (
+          cart.map((item, i) => (
+            <div key={i} className="mb-4">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <img src={item.img} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" />
+                  <div>
+                    <p className="font-semibold text-sm sm:text-base">{item.name}</p>
+                    <p className="text-xs text-gray-400">Size: {item.size}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">AED {item.price}</p>
+
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 sm:gap-6">
+                  <span className="bg-gray-700 px-3 py-1 rounded-lg">{item.qty}</span>
+                  <p>{(Number(item.price) * item.qty).toFixed(2)}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 sm:gap-6">
-                <span className="bg-gray-700 px-3 py-1 rounded-lg">{item.qty}</span>
-                <p>{(Number(item.price) * item.qty).toFixed(2)}</p>
+              <div className="flex gap-3 mt-4">
+                <input
+                  type="text"
+                  placeholder="Order Note..."
+                  className="flex-1 bg-gray-800 px-3 py-2 sm:py-3 rounded-lg text-sm outline-none"
+                />
+                <button
+                  onClick={() => handleDelete(item.name, item.size)}
+                  className="border border-amber-600 p-2 rounded-lg"
+                >
+                  <Trash className="text-amber-500 w-5 h-5" />
+                </button>
               </div>
             </div>
-
-            <div className="flex gap-3 mt-4">
-              <input
-                type="text"
-                placeholder="Order Note..."
-                className="flex-1 bg-gray-800 px-3 py-2 sm:py-3 rounded-lg text-sm outline-none"
-              />
-              <button
-                onClick={() => handleDelete(item.name, item.size)}
-                className="border border-amber-600 p-2 rounded-lg"
-              >
-                <Trash className="text-amber-500 w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        ))}
+          )
+          ))}
       </div>
 
       {/* Footer */}
@@ -126,7 +132,7 @@ function Order() {
         <button
           onClick={() => {
             if (cart.length > 0) {
-              setShowSuccess(false); 
+              setShowSuccess(false);
               setShowReceipt(true);
             }
           }}

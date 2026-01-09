@@ -6,6 +6,7 @@ import {BrowserRouter, Routes,Route } from "react-router-dom";
 import Order from "./component/Order";
 import Menu from "./component/Menu";
 import Receipt from "./component/Receipt";
+import MenuBar from "./dashboard/MenuBar";
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Menu/>}/>
         <Route path="Home" element={<Home/>}/>
         <Route path="/receipt" element={<Receipt/>}/>
+        <Route path="/MenuBar" element={<MenuBar/>}/>
        
       </Routes>
      
