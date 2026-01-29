@@ -1,8 +1,14 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { DashContext } from "../context/DashContext";
 
-const AddCategory = ({ onClose, onAdd, editData }) => {
-  const [form, setForm] = useState({
+
+const AddCategory = () => {
+
+  const { onClose,setShowAddCategory,onAdd,editData}=useContext(DashContext);
+
+
+  const [formCategory, setFormCategory] = useState({
     name: "",
     products: "",
     stock: "",
@@ -10,18 +16,23 @@ const AddCategory = ({ onClose, onAdd, editData }) => {
 
   useEffect(() => {
     if (editData) {
-      setForm(editData);
+      setFormCategory(editData);
     }
   }, [editData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(form);
+    onAdd(formCategory);
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-6">
+    <div className="flex justify-center items-center  ">
+       <div
+          className="fixed inset-0 bg-black opacity-50 z-40"
+          onClick={() => setShowAddCategory(false)}
+        />
+     <div className=" w-96 h-full bg-white shadow-lg z-50 p-6">
+       <h2 className="text-2xl font-semibold mb-6">
         {editData ? "Edit Category" : "Add Category"}
       </h2>
 
@@ -30,8 +41,8 @@ const AddCategory = ({ onClose, onAdd, editData }) => {
           type="text"
           placeholder="Category Name"
           className="w-full border p-2 rounded"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          value={formCategory.name}
+          onChange={(e) => setFormCategory({ ...formCategory, name: e.target.value })}
           required
         />
 
@@ -53,6 +64,7 @@ const AddCategory = ({ onClose, onAdd, editData }) => {
           </button>
         </div>
       </form>
+     </div>
     </div>
   );
 };

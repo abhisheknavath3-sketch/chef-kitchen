@@ -3,10 +3,10 @@ import { CheckCircle } from "lucide-react";
 import { OrderContext } from "../context/OrderContext";
 
 function Success() {
-  
-  const{
+
+  const {
     onDone
-  }=useContext(OrderContext)
+  } = useContext(OrderContext)
 
 
   return (
@@ -20,16 +20,14 @@ function Success() {
         </h2>
 
         <p className="text-gray-400 text-sm mb-6">
-          Your order has been confirmed.  
+          Your order has been confirmed.
           Thank you for choosing Chef Kitchen 🍽️
         </p>
 
-        <button
-          onClick={onDone}
-          className="w-full bg-green-500 py-2 rounded-xl font-semibold"
-        >
+        <button onClick={onDone} className="w-full bg-green-500 py-2 rounded-xl font-semibold">
           Done
         </button>
+
       </div>
     </div>
   );

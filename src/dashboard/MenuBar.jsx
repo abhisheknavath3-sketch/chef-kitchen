@@ -55,8 +55,8 @@ import { Shapes, StretchHorizontal, ShoppingCart, ChefHat } from 'lucide-react'
 const MenuBar = () => {
   return (
     <div className="w-60 bg-gray-300 h-full">
-      
-     
+
+
       <div className="flex items-center gap-2 px-2 py-8">
         <ChefHat size={32} />
         <h1 className="text-2xl font-bold">Chef Kitchen</h1>
@@ -66,8 +66,7 @@ const MenuBar = () => {
         end
         to="/admin"
         className={({ isActive }) =>
-          `flex px-5 py-3 items-center gap-2 text-xl font-semibold ${
-            isActive ? 'bg-gray-100 rounded-xl' : 'bg-gray-300'
+          `flex px-5 py-3 items-center gap-2 text-xl font-semibold ${isActive ? 'bg-gray-100 rounded-xl' : 'bg-gray-300'
           }`
         }
       >
@@ -78,8 +77,7 @@ const MenuBar = () => {
       <NavLink
         to="/admin/products"
         className={({ isActive }) =>
-          `flex px-5 py-3 items-center gap-2 text-xl font-semibold ${
-            isActive ? 'bg-gray-100 rounded-xl' : 'bg-gray-300'
+          `flex px-5 py-3 items-center gap-2 text-xl font-semibold ${isActive ? 'bg-gray-100 rounded-xl' : 'bg-gray-300'
           }`
         }
       >
@@ -90,14 +88,14 @@ const MenuBar = () => {
       <NavLink
         to="/admin/shopping"
         className={({ isActive }) =>
-          `flex px-5 py-3 items-center gap-2 text-xl font-semibold ${
-            isActive ? 'bg-gray-100 rounded-xl' : 'bg-gray-300'
+          `flex px-5 py-3 items-center gap-2 text-xl font-semibold ${isActive ? 'bg-gray-100 rounded-xl' : 'bg-gray-300'
           }`
         }
       >
         <ShoppingCart />
-        <p>Shopping</p>
+        <p>Order</p>
       </NavLink>
+
 
     </div>
   )

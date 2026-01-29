@@ -6,10 +6,16 @@ import Receipt from "./component/Receipt";
 import Layout from "./dashboard/Layout";
 import Category from "./dashboard/Category";
 import Products from "./dashboard/Products";
-import Shopping from "./dashboard/Shopping";
-import AddCategory from "./dashboard/AddCategory";
+import DashOrder from "./dashboard/OrderDashboard";
+import { useEffect } from "react";
+
 
 function App() {
+
+  //   useEffect(() => {
+  //   localStorage.clear();
+  // }, []);
+
   return (
     <div className="w-full flex h-screen">
       <Routes>
@@ -21,7 +27,7 @@ function App() {
         <Route path="/admin" element={<Layout />}>
           <Route index element={<Category />} />
           <Route path="products" element={<Products />} />
-          <Route path="shopping" element={<Shopping />} />
+          <Route path="shopping" element={<DashOrder />} />
         </Route>
       </Routes>
     </div>

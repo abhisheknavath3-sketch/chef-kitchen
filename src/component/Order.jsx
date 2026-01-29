@@ -43,7 +43,7 @@ function Order() {
       {/* Header */}
       <div className="flex flex-row justify-between">
         <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-          Orders
+         Confirmation 
         </h2>
         <button onClick={onClose} className=" text-2xl mb-8"><X /></button>
       </div>
@@ -84,7 +84,13 @@ function Order() {
             <div key={i} className="mb-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                  <img src={item.img} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" />
+                  
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
+                  />
+
                   <div>
                     <p className="font-semibold text-sm sm:text-base">{item.name}</p>
                     <p className="text-xs text-gray-400">Size: {item.size}</p>
@@ -144,7 +150,7 @@ function Order() {
   `}
           disabled={cart.length === 0}
         >
-          Order now
+          Confirm Order
         </button>
 
 

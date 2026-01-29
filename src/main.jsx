@@ -4,11 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css'
 import App from './App.jsx'
 import { OrderProvider } from './context/OrderContext.jsx';
+import { DashProvider } from './context/DashContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
+  <DashProvider>
   <OrderProvider>
     <App />
     </OrderProvider>
+    </DashProvider>
   </BrowserRouter>,
 )

@@ -4,21 +4,29 @@ import { OrderContext } from '../context/OrderContext';
 
 const Body = () => {
 
-  const{
+  const {
 
-  filteredDishes,
+    filteredProducts,
+    showType,
+    setShowType,
+    orderType,
+    setOrderType,
+    selectedSize,
+    handleSizeSelect,
+    handleAddToCart,
+    isItemInCart,
+    showOrder,
+
+
+  } = useContext(OrderContext)
+
+  console.log("OrderContext data:", {
+  filteredProducts,
   showType,
-  setShowType,
   orderType,
-  setOrderType,
   selectedSize,
-  handleSizeSelect,
-  handleAddToCart,
-  isItemInCart,
   showOrder,
-
-  }=useContext(OrderContext)
-
+});
   return (
     <div className='bg-gray-800 h-full overflow-hidden  flex flex-col '>
       <div className="flex-1 flex flex-col h-full">
@@ -28,7 +36,7 @@ const Body = () => {
             <h1 className="text-lg sm:text-xl head">
               Choose Dishes
               <span className="text-gray-400 text-sm ml-2">
-                ({filteredDishes.length} items)
+                ({filteredProducts.length} items)
               </span>
             </h1>
 
@@ -68,22 +76,23 @@ const Body = () => {
 
           </div>
 
-          {filteredDishes.length === 0 && (
+          {filteredProducts.length === 0 && (
             <p className="text-gray-400 text-center mt-10">No items found.</p>
           )}
 
+
           <div className={`grid h-full overflow-y-auto grid-cols-2 sm:grid-cols-2  gap-6 sm:gap-8 py-10 hide-scrollbar pb-25 ${showOrder ? "lg:grid-cols-4" : "lg:grid-cols-5"}`}>
-            {filteredDishes.map((item, index) => {
+            {filteredProducts.map((item, index) => {
               const size = selectedSize[item.name] || "S";
-              const displayPrice = item.basePrice + item.sizePrices[size];
+              const displayPrice = Number(item.sizes[size] || 0)
 
               return (
                 <div
                   key={index}
-                  className="bg-gray-900 rounded-3xl p-6 flex flex-col items-center w-full max-w-[250px] pb-2 mx-auto"
+                  className="bg-gray-900 rounded-3xl p-6 flex flex-col items-center w-full h-70 max-w-[250px] pb-2 mx-auto"
                 >
                   <img
-                    src={item.img}
+                    src={item.image}
                     className="w-28 h-28 rounded-full object-cover -mt-12 mb-4"
                   />
 
@@ -96,7 +105,7 @@ const Body = () => {
                   <p className="text-xs text-gray-400 mt-1">{item.bowls}</p>
 
                   <div className="flex gap-2 mt-2">
-                    {item.sizes.map((s) => {
+                    {Object.keys(item.sizes || {}).map((s) => {
                       const activeSize = selectedSize[item.name] || "S";
 
                       return (

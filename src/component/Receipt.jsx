@@ -1,29 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { X } from "lucide-react";
 import Success from "./Success";
-import { useState } from "react";
-import { useEffect } from "react";
 import { OrderContext } from "../context/OrderContext";
-
-
+import Payment from "./Payment";
 
 
 function Receipt() {
+  const { cart, orderType, onClose, setShowPayment , showSuccess,  } =
+    useContext(OrderContext);
 
-  
-  const{
-    cart, orderType, onClose, onComplete,onRemove,showSuccess, setShowSuccess
-  }=useContext(OrderContext)
+  if (!cart.length) return null;
 
 
-  const subTotal = cart.reduce(
-    (total, item) => total + item.price * item.qty,
-    0
-  );
-
+  const subTotal = cart.reduce((total, item) => total + item.price * item.qty, 0);
   const discount = subTotal * 0.05;
   const total = subTotal - discount;
- 
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -32,19 +23,9 @@ function Receipt() {
     };
   }, []);
 
-
-
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-3">
-      <div
-        className="
-    bg-gray-900 text-white  w-full max-w-[380px]  max-h-[90vh] rounded-2xl  p-6
-    relative
-    overflow-y-auto
-    hide-scrollbar
-  "
-      >
-
+      <div className="bg-gray-900 text-white w-full max-w-[380px] max-h-[90vh] rounded-2xl p-6 relative overflow-y-auto hide-scrollbar">
         {/* Close */}
         <button onClick={onClose} className="absolute right-4 top-4">
           <X />
@@ -89,36 +70,33 @@ function Receipt() {
             <p className="text-gray-400">Sub total</p>
             <p>{subTotal.toFixed(2)} AED</p>
           </div>
-
           <div className="flex justify-between">
             <p className="text-gray-400">Discount (5%)</p>
             <p>-{discount.toFixed(2)} AED</p>
           </div>
-
           <div className="flex justify-between text-lg font-semibold">
             <p>Total</p>
             <p>{total.toFixed(2)} AED</p>
           </div>
         </div>
 
-        {/* Button */}
+        {/* Confirm Order */}
         <button
-          onClick={onRemove}
+          onClick={() => setShowPayment(true)}
           className="w-full mt-6 bg-orange-500 py-3 rounded-xl font-semibold"
         >
-          Confirm Order
+          Payment
         </button>
 
         <p className="text-center text-xs text-gray-500 mt-3">
           Thank you for your order
         </p>
       </div>
+
+     
       {showSuccess && (
-        <Success
-          onDone={() => {
-            setShowSuccess(false);
-            onComplete(); // 🔥 very important
-          }}
+        <Payment
+       
         />
       )}
 
