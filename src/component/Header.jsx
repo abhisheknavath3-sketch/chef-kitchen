@@ -1,132 +1,18 @@
-// import React, { useContext } from 'react'
-// import { Search } from 'lucide-react'
-// // import { tabs } from '../constant'
-// import { OrderContext } from '../context/OrderContext'
-// import { DashContext } from '../context/DashContext'
-
-
-// const Header = () => {
-
-//   const {
-//     currentDateTime, searchQuery, setSearchQuery, setActive, active,
-//   } = useContext(OrderContext)
-
-//   const {
-
-//     categories
-
-//   } = useContext(DashContext)
-
-//   const categoryTabs = [
-//     { id: "today", label: "All" },
-//     ...categories.map((cat) => ({
-//       id: cat.name,
-//       label: cat.name,
-//     })),
-//   ];
-
-
-//   return (
-//     <>
-
-//       <div className="flex flex-col  sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 ">
-//         <div>
-//           <h1 className="text-4xl head">Chef Kitchen</h1>
-//           {currentDateTime.toLocaleDateString("en-IN", {
-//             weekday: "long",
-//             day: "numeric",
-//             month: "long",
-//             year: "numeric",
-//           })}
-//         </div>
-
-//         {/* DESKTOP SEARCH */}
-//         <div className="relative hidden sm:block">
-//           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
-//           <input
-//             type="text"
-//             placeholder="Search food, coffee, etc.."
-//             className="h-14 pl-10 pr-4 w-60 rounded-xl bg-gray-800 border border-gray-600 outline-none"
-//             value={searchQuery}
-//             onChange={(e) => setSearchQuery(e.target.value)}
-//           />
-
-//         </div>
-
-//         {/* MOBILE SEARCH */}
-//         <div className="relative sm:hidden mt-1 text-sm  ">
-//           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 " />
-//           <input
-//             type="text"
-//             placeholder="Search for food, coffee, etc.."
-//             className="h-8 w-full pl-10 pr-4 rounded-2xl bg-gray-800 border border-gray-600 outline-none"
-//             value={searchQuery}
-//             onChange={(e) => setSearchQuery(e.target.value)}
-//           />
-//         </div>
-
-//       </div>
-      
-//       <div className="relative flex items-center text-white mt-5 gap-6 hide-scrollbar">
-//         {categoryTabs.map((tab) => (
-//           <button
-//             key={tab.id}
-//             onClick={() => setActive(tab.id)}
-//             className={`text-sm sm:text-base ${active === tab.id ? "text-orange-400" : "text-white"
-//               }`}
-//           >
-//             {tab.label}
-//           </button>
-//         ))}
-//       </div>
-
-
-//       <div className="relative w-full mt-4">
-//         <div className="w-full border-b-2 border-gray-600  "></div>
-
-//         <div
-//           className="
-//     absolute top-0 border-b-4 border-orange-400 rounded-full 
-//     transition-all duration-300
-//     w-1/6 md:w-[70px]
-//   "
-//           style={{
-//             left:
-//               window.innerWidth >= 768
-//                 ? active === "today"
-//                   ? "0px"
-//                   : active === "our"
-//                     ? "125px"
-//                     : "250px"
-//                 : active === "today"
-//                   ? "0%"
-//                   : active === "our"
-//                     ? "32.33%"
-//                     : "64.66%",
-//           }}
-//         />
-//       </div>
-//     </>
-//   )
-// }
-
-// export default Header;
-
-
-
-
-import React, { useContext } from 'react'
-import { Search } from 'lucide-react'
-import { OrderContext } from '../context/OrderContext'
-import { DashContext } from '../context/DashContext'
+import React, { useContext, useRef, useEffect, useState } from "react";
+import { Search, ChefHat } from "lucide-react";
+import { OrderContext } from "../context/OrderContext";
+import { DashContext } from "../context/DashContext";
 
 const Header = () => {
-
   const {
-    currentDateTime, searchQuery, setSearchQuery, setActive, active,
-  } = useContext(OrderContext)
+    currentDateTime,
+    searchQuery,
+    setSearchQuery,
+    setActive,
+    active,
+  } = useContext(OrderContext);
 
-  const { categories } = useContext(DashContext)
+  const { categories } = useContext(DashContext);
 
   const categoryTabs = [
     { id: "today", label: "All" },
@@ -136,29 +22,58 @@ const Header = () => {
     })),
   ];
 
-  // ✅ NEW: find active tab index
-  const activeIndex = categoryTabs.findIndex(tab => tab.id === active);
+  // ✅ underline logic
+  const tabRefs = useRef([]);
+  const [underline, setUnderline] = useState({ left: 0, width: 0 });
+
+  useEffect(() => {
+    const index = categoryTabs.findIndex(t => t.id === active);
+    const el = tabRefs.current[index];
+
+    if (el) {
+      setUnderline({
+        left: el.offsetLeft,
+        width: el.offsetWidth,
+      });
+    }
+  }, [active, categoryTabs]);
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4">
-        <div>
-          <h1 className="text-4xl head">Chef Kitchen</h1>
-          {currentDateTime.toLocaleDateString("en-IN", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
+      {/* TOP HEADER */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mt-4">
+
+        <div className="flex items-center gap-4">
+          <div className="bg-orange-400 p-3 rounded-xl">
+            <ChefHat className="text-black" size={28} />
+          </div>
+
+          <div>
+            <h1 className="text-3xl font-bold text-orange-400">
+              Chef Kitchen
+            </h1>
+
+            <p className="text-gray-400 text-sm">
+              {currentDateTime.toLocaleDateString("en-IN", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </p>
+          </div>
         </div>
 
         {/* SEARCH */}
-        <div className="relative hidden sm:block">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="text"
-            placeholder="Search food, coffee, etc.."
-            className="h-14 pl-10 pr-4 w-60 rounded-xl bg-gray-800 border border-gray-600 outline-none"
+            placeholder="Search food, coffee..."
+            className="h-12 pl-12 pr-4 w-72 rounded-xl 
+                       bg-gray-900 border border-gray-700 
+                       text-white placeholder-gray-400
+                       focus:outline-none focus:border-orange-400"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -166,39 +81,38 @@ const Header = () => {
       </div>
 
       {/* CATEGORY TABS */}
-      {/* CATEGORY TABS */}
-<div className="relative mt-5">
+      <div className="relative mt-6">
 
-  {/* Tabs */}
-  <div className="flex gap-8 text-white relative">
-    {categoryTabs.map((tab) => (
-      <button
-        key={tab.id}
-        onClick={() => setActive(tab.id)}
-        className={`text-sm sm:text-base ${
-          active === tab.id ? "text-orange-400" : "text-white"
-        }`}
-      >
-        {tab.label}
-      </button>
-    ))}
-  </div>
+        <div className="flex gap-8 text-sm font-medium relative">
+          {categoryTabs.map((tab, i) => (
+            <button
+              key={tab.id}
+              ref={(el) => (tabRefs.current[i] = el)}
+              onClick={() => setActive(tab.id)}
+              className={`pb-2 transition ${
+                active === tab.id
+                  ? "text-orange-400"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-  {/* Base line */}
-  <div className="w-full border-b border-gray-600 mt-2"></div>
+        <div className="w-full border-b border-gray-700"></div>
 
-  {/* ✅ Sliding underline */}
-  <div
-    className="absolute bottom-0 h-[3px] bg-orange-400 rounded-full transition-all duration-300"
-    style={{
-      width: "40px",
-      left: `calc(${categoryTabs.findIndex(t => t.id === active) * 100}px)`,
-    }}
-  />
-</div>
-
+        {/* ✅ Dynamic underline */}
+        <div
+          className="absolute bottom-0 h-[3px] bg-orange-400 rounded-full transition-all duration-300"
+          style={{
+            left: underline.left,
+            width: underline.width,
+          }}
+        />
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default Header;

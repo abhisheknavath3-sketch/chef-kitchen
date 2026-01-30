@@ -15,7 +15,7 @@ const Layout = () => {
         <Head />
 
     
-        <div className="flex-1 p-4 bg-white overflow-auto">
+        <div className="flex-1 p-4 bg-gray-800 overflow-auto">
           <Outlet />
         </div>
       </div>

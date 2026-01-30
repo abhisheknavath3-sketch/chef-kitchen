@@ -38,19 +38,19 @@ const Category = () => {
   };
 
   return (
-    <div className="bg-gray-100 rounded-lg shadow p-6 relative">
+    <div className="bg-gray-900 rounded-lg shadow p-6 relative">
       {!showAddCategory && (
         <>
           {/* Header */}
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold">Category</h2>
+          <div className="flex justify-between items-center mb-6 text-orange-400">
+            <h2 className="text-3xl font-semibold">Category</h2>
 
             <button
               onClick={() => {
                 setEditIndex(null);
                 setShowAddCategory(true);
               }}
-              className="bg-gray-900 text-white px-4 py-2 rounded-md text-sm"
+              className="bg-orange-500 text-white px-4 py-2 rounded-md "
             >
               Add Category
             </button>
@@ -60,7 +60,7 @@ const Category = () => {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-gray-300 text-sm text-center">
+                <tr className="bg-orange-400 text-sm text-center text-white">
                   <th className="p-3 rounded-tl-lg">Name</th>
                   <th className="p-3">Products</th>
                   <th className="p-3">Stock</th>
@@ -71,14 +71,14 @@ const Category = () => {
               <tbody>
                 {categories.length === 0 && (
                   <tr>
-                    <td colSpan="4" className="p-4 text-center">
+                    <td colSpan="4" className="p-4 text-center ">
                       No categories added
                     </td>
                   </tr>
                 )}
 
                 {categories.map((cat, index) => (
-                  <tr key={index} className="border-b text-sm text-center">
+                  <tr key={index} className="border-b text-sm text-center text-white">
                     <td className="p-3">{cat.name}</td>
 
                     {/* Optional live product count */}
@@ -101,7 +101,7 @@ const Category = () => {
                           setEditIndex(index);
                           setShowAddCategory(true);
                         }}
-                        className="px-3 py-1 text-xs bg-blue-600 text-white rounded"
+                        className="px-3 py-1 text-xs bg-orange-400 text-white rounded"
                       >
                         Edit
                       </button>

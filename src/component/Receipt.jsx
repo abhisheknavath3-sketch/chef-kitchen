@@ -6,8 +6,14 @@ import Payment from "./Payment";
 
 
 function Receipt() {
-  const { cart, orderType, onClose, setShowPayment , showSuccess,  } =
-    useContext(OrderContext);
+  const {
+    cart,
+    orderType,
+    onClose,
+    setShowPayment,
+    showPayment,
+    showSuccess
+  } = useContext(OrderContext);
 
   if (!cart.length) return null;
 
@@ -93,12 +99,9 @@ function Receipt() {
         </p>
       </div>
 
-     
-      {showSuccess && (
-        <Payment
-       
-        />
-      )}
+
+      {showPayment && <Payment />}
+      {showSuccess && <Success />}
 
     </div>
   );

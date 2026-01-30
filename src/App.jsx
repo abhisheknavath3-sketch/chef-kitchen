@@ -7,15 +7,8 @@ import Layout from "./dashboard/Layout";
 import Category from "./dashboard/Category";
 import Products from "./dashboard/Products";
 import DashOrder from "./dashboard/OrderDashboard";
-import { useEffect } from "react";
-
 
 function App() {
-
-  //   useEffect(() => {
-  //   localStorage.clear();
-  // }, []);
-
   return (
     <div className="w-full flex h-screen">
       <Routes>
@@ -23,7 +16,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/receipt" element={<Receipt />} />
 
-        {/* Dashboard */}
+        {/* Admin dashboard */}
         <Route path="/admin" element={<Layout />}>
           <Route index element={<Category />} />
           <Route path="products" element={<Products />} />

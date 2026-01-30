@@ -3,24 +3,36 @@ import { User } from "lucide-react";
 
 const Head = () => {
   return (
-    <div className="bg-gray-200 h-20 w-full flex items-center justify-end px-6 shadow">
-      
-   
-      <div className="flex items-center gap-4 text-black">
-        
-      
-        <div className="text-right">
-          <p className="font-medium">Admin</p>
-          <p className="text-sm">admin@gmail.com</p>
-        </div>
+    <header className="w-full h-20 px-8 flex items-center justify-between
+                       bg-gray-900 border-b border-orange-500 shadow-md">
 
-        
-        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
-          <User className="text-black" size={22} />
-        </div>
+      {/* Left - Page Title */}
+      <div>
+        <h1 className="text-2xl font-bold text-orange-400 tracking-wide">
+          Admin Panel
+        </h1>
+
       </div>
 
-    </div>
+      {/* Right - Profile */}
+      <div className="flex items-center gap-4 cursor-pointer group">
+
+        {/* Text */}
+        <div className="text-right">
+          <p className="font-semibold text-white">Admin</p>
+          <p className="text-sm text-gray-400">admin@gmail.com</p>
+        </div>
+
+        {/* Avatar */}
+        <div className="w-11 h-11 rounded-full bg-orange-400 
+                        flex items-center justify-center
+                        transition-all duration-300
+                        group-hover:scale-110 group-hover:bg-orange-500">
+
+          <User size={20} className="text-black" />
+        </div>
+      </div>
+    </header>
   );
 };
 

@@ -6,12 +6,11 @@ import { DashContext } from "./DashContext";
 export const OrderContext = createContext();
 
 export function OrderProvider({ children }) {
-    const { products: dashProducts = [] } = useContext(DashContext);
 
 
     const { products = [] } = useContext(DashContext);
 
-    console.log("Products from DashContextxxxx:", products);
+
 
 
     const [active, setActive] = useState("today");
@@ -25,6 +24,22 @@ export function OrderProvider({ children }) {
     const [showSuccess, setShowSuccess] = useState(false);
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [showPayment, setShowPayment] = useState(false);
+
+
+    const [orders, setOrders] = useState(() => {
+        const saved = localStorage.getItem("orders");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("orders", JSON.stringify(orders));
+    }, [orders]);
+
+
+const clearOrders = () => {
+    setOrders([]);
+    localStorage.removeItem("orders");
+};
 
 
 
@@ -79,10 +94,26 @@ export function OrderProvider({ children }) {
         );
     };
 
-    const confirmOrder = () => {
+    const confirmOrder = (paymentMethod, customerName) => {
+
+        if (cart.length === 0) return;
+
+        const newOrder = {
+            id: Date.now(),
+            customerName: customerName || "Guest", // ✅ fallback
+            items: [...cart],
+            paymentMethod,
+        };
+
+        setOrders(prev => [...prev, newOrder]);
+
         setShowPayment(false);
         setShowSuccess(true);
     };
+
+
+
+
 
 
     const onClose = () => {
@@ -120,7 +151,7 @@ export function OrderProvider({ children }) {
                 filteredProducts, showReceipt, setShowReceipt,
                 showSuccess, setShowSuccess, handleDelete,
                 onClose, onRemove, onDone, confirmOrder, showPayment,
-                setShowPayment,
+                setShowPayment, orders,clearOrders,
             }}
         >
             {children}

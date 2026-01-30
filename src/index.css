@@ -9,3 +9,20 @@ html,
 body {
   overflow-x: hidden;
 }
+/* Hide scrollbar everywhere */
+
+/* Chrome, Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* IE/Edge */
+* {
+  -ms-overflow-style: none;
+}
