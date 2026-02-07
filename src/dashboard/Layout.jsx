@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import MenuBar from './MenuBar'
 import Head from './Head'
 
+
 const Layout = () => {
   return (
     <div className="flex h-screen w-full">

@@ -53,7 +53,7 @@ function Order() {
         {["Dine In", "Take Away", "Delivery"].map((mode) => (
           <button
             key={mode}
-            onClick={() => setOrderType(mode)} // update selection globally
+            onClick={() => setOrderType(mode)} 
             className={`transition-all border p-3 rounded-lg ${orderType === mode ? "bg-orange-500" : "text-orange-400 cursor-pointer"
               }`}
           >
@@ -172,5 +172,6 @@ function Order() {
 
 
 export default Order;
+
 
 

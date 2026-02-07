@@ -14,7 +14,7 @@ const Products = () => {
     setOpen,
   } = useContext(DashContext);
 
- 
+
 
   // Load categories
   useEffect(() => {
@@ -24,10 +24,15 @@ const Products = () => {
     }
   }, [setProductCategories]);
 
-  // Save products
   useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(products));
+    try {
+      localStorage.setItem("products", JSON.stringify(products));
+    } catch (err) {
+      console.error("LocalStorage quota exceeded", err);
+    }
   }, [products]);
+
+
 
   const handleEdit = (product) => {
     setForm({ ...product });
@@ -55,7 +60,7 @@ const Products = () => {
               stock: "",
               sizes: {},
               orderType: [],
-              
+
             });
             setEditingId(null);
             setOpen(true);

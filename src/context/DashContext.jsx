@@ -28,8 +28,14 @@ export function DashProvider({ children }) {
     });
 
     useEffect(() => {
-        localStorage.setItem("products", JSON.stringify(products));
+        try {
+            localStorage.setItem("products", JSON.stringify(products));
+        } catch (e) {
+            console.error("Storage full", e);
+        }
     }, [products]);
+
+
 
     const [open, setOpen] = useState(false);
 
@@ -55,7 +61,7 @@ export function DashProvider({ children }) {
         reader.onload = () => {
             setForm((prev) => ({
                 ...prev,
-                image: reader.result, // ✅ Base64 (persistent)
+                image: reader.result,
             }));
         };
 

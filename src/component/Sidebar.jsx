@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const [active, setActive] = useState(0);
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
   const icons = [
     GoHome,
@@ -71,8 +71,23 @@ function Sidebar() {
           ))}
         </div>
 
-        <IoLogOutOutline className="text-[#F99147] hover:text-white text-3xl cursor-pointer mt-15 relative z-10" 
-                                    onClick={()=>navigate("/")}/>
+        {/* <IoLogOutOutline
+          className="text-[#F99147] hover:text-white text-3xl cursor-pointer mt-15 relative z-10"
+          onClick={() => {
+            localStorage.removeItem("isLoggedIn");
+            navigate("/", { replace: true });
+          }}
+        /> */}
+        <IoLogOutOutline
+  className="text-[#F99147] hover:text-white text-3xl cursor-pointer mt-15 relative z-10"
+  onClick={() => {
+  console.log("clicked");
+  navigate("/", { replace: true });
+}}
+/>
+
+
+
       </div>
 
       <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full h-10 bg-[#1F1D2B] flex justify-around items-center border-t border-gray-800 opacity-65">

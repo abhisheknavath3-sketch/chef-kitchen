@@ -27,25 +27,22 @@ const AddProduct = () => {
   const handleSave = () => {
     const finalProduct = {
       ...form,
-      orderType: form.orderType.length
-        ? form.orderType
-        : ["DINE_IN", "TAKEAWAY", "DELIVERY"],
+      orderType: form.orderType.length ? form.orderType : ["DINE_IN", "TAKEAWAY", "DELIVERY"],
+      id: editingId || Date.now(), // ensure id is always present
     };
 
-    if (editingId) {
-      setProducts((p) =>
-        p.map((item) =>
-          item.id === editingId ? { ...item, ...finalProduct } : item
-        )
-      );
-    } else {
-      setProducts([...products, { id: Date.now(), ...finalProduct }]);
-    }
+    setProducts((prev) => {
+      if (editingId) {
+        return prev.map(p => p.id === editingId ? finalProduct : p);
+      }
+      return [...prev, finalProduct];
+    });
 
     setForm({ name: "", category: "", stock: "", sizes: {}, orderType: [], image: null });
     setEditingId(null);
     setOpen(false);
   };
+
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">

@@ -1,4 +1,4 @@
-// src/component/Menu.jsx
+
 import React, { useState } from "react";
 import Login from "../Login"; // ✅ go up one level to src/
 

@@ -20,13 +20,13 @@ const Body = () => {
 
   } = useContext(OrderContext)
 
-  console.log("OrderContext data:", {
-  filteredProducts,
-  showType,
-  orderType,
-  selectedSize,
-  showOrder,
-});
+  //   console.log("OrderContext data:", {
+  //   filteredProducts,
+  //   showType,
+  //   orderType,
+  //   selectedSize,
+  //   showOrder,
+  // });
   return (
     <div className='bg-gray-800 h-full overflow-hidden  flex flex-col '>
       <div className="flex-1 flex flex-col h-full">
@@ -102,11 +102,16 @@ const Body = () => {
                     {displayPrice.toFixed(2)} AED
                   </p>
 
+                  <p className="text-xs text-gray-400 mt-1">Stock: {item.stock}</p>
+
+
                   <p className="text-xs text-gray-400 mt-1">{item.bowls}</p>
 
                   <div className="flex gap-2 mt-2">
                     {Object.keys(item.sizes || {}).map((s) => {
                       const activeSize = selectedSize[item.name] || "S";
+
+
 
                       return (
                         <button
@@ -125,17 +130,14 @@ const Body = () => {
                   </div>
 
                   <button
-                    onClick={() => {
-                      handleAddToCart(item);
-
-                    }}
-                    className={`rounded-xl px-9 py-0.5 mt-6 ${isItemInCart(item)
-                      ? "bg-green-500"
-                      : "bg-amber-500 hover:bg-amber-600"
+                    onClick={() => handleAddToCart(item)}
+                    disabled={item.stock <= 0}
+                    className={`rounded-xl px-9 py-0.5 mt-6 ${isItemInCart(item) ? "bg-green-500" : item.stock <= 0 ? "bg-gray-600 cursor-not-allowed" : "bg-amber-500 hover:bg-amber-600"
                       }`}
                   >
-                    {isItemInCart(item) ? "Added" : "Add"}
+                    {item.stock <= 0 ? "Unavailable" : isItemInCart(item) ? "Added" : "Add"}
                   </button>
+
                 </div>
               );
             })}
